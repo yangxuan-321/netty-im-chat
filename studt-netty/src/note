@@ -1,0 +1,129 @@
+传统BIO:
+    一般情况下是：先打开的后关闭，后打开的先关闭
+    另一种情况：看依赖关系，如果流a依赖流b，应该先关闭流a，再关闭流b
+    例如处理流a依赖节点流b，应该先关闭处理流a，再关闭节点流b
+    当然完全可以只关闭处理流，不用关闭节点流。处理流关闭的时候，会调用其处理的节点流的关闭方法
+    如果将节点流关闭以后再关闭处理流，会抛出IO异常
+
+    Socket输入流在使用 read读取时，如果无数据 会阻塞知道有数据发生（https://blog.csdn.net/fw0124/article/details/41227543）
+    知道 socket或者另一端的流被关闭时 才会返回null 或者 -1
+
+
+
+JDK NIO:
+    1.NIO模型中 通常会有两个轮询器:
+      每个线程绑定一个轮询器selector
+           一个负责轮询是否有新的链接 serverSelector
+           一个轮询是否有新的数据可读 clientSelector
+
+
+    2.服务端检测到新的连接之后，不在创建一个新的线程，而是将新连接绑定到clientSelector
+
+
+    3.clientSelector负责轮询数据。并读取
+
+    特点：编程麻烦 容易出现bug
+
+
+    https://blog.csdn.net/kavu1/article/details/53212178
+    通俗解释NIO:
+        在用nio通讯的过程我用以下情景给你模拟：
+        1. 学校(ServerSocketChannel)
+        2。 学校教务处（Selector）
+        3。 老师 (ServerSocket )
+        4。 学生 (SocketChannel)
+        5。 员工号/学生号（SelectionKey
+        学校相当于我们的网络应用程序，一旦学校启动，学校就不停止，不断运行，直到学期结束；
+        要启动学校就要：
+        ServerSocketChannel ssc= ServerSocketChannel.open();//新建NIO通道
+        ssc.configureBlocking( false );//使通道为非阻塞
+
+
+        老师： 相当于服务端的Socket，一个老师对应多个学生，多个学生向老师请教，老师会一一做出回答。而学校要正常运营当然当不了老师，所以在开学之前，必须先聘请专业的老师来任教
+        ServerSocket ss = ssc.socket();//创建基于NIO通道的socket连接
+        ss.bind(new InetSocketAddress("127.0.0.1",SERVERPORT));//新建socket通道的端口
+
+
+        学校教务处： 老师都有了，但是需要有部门对老师和学生做统一的管理， 如果你去一个学校找一个人，实在是找不到，你可以告诉教务处，那个人是学生还是老师，是老师的话员工编号老师姓名的多少，是学生的话学号和姓名是多少，教务处就会找到告诉你他在哪里。
+        //将NIO通道选绑定到择器,当然绑定后分配的主键为skey
+        SelectionKey skey = ssc.register( selector, SelectionKey.OP_ACCEPT );
+        ssc注册了选择器后，其下的老师ServerSocket就也入了员工册了。所以老师的编号就是skey
+
+
+        学生（相当于Client）： 学校、老师、教务处都有了，现在就可以招生了！
+        如果有学生来报名：
+        while(true){//除非学期结束，否则一直等待学生
+            int num = selector.select();//获取通道内是否有选择器的关心事件, 意思是有多少学生报告
+            if(num<1){
+                continue;
+            }
+        }
+        Set selectedKeys = selector.selectedKeys();//获取通道内关心事件的集合 ，这里的集合就是老师和学生的编号集合，如果key是学生的，那就是老学生来问问题，如果key是老师的，那就是招生办的老师带着一个新生来注册
+        Iterator it = selectedKeys.iterator();
+        while (it.hasNext()) {//遍历每个key （学生key和老师key）
+            .......
+        }
+        .....
+        }
+
+        既然有学生来报告，那有两种可能，一种是招生老师带着新生来注册的，一种是老生来问问题的。
+        上面的while (it.hasNext()) 体可以这样写：
+
+        while (it.hasNext()) {//遍历每个事件
+        try{
+        SelectionKey key = (SelectionKey)it.next(); //先得到这个学生的编号key
+
+        //判断是新生报道还是老生问问题
+        if ((key.readyOps() & SelectionKey.OP_ACCEPT)
+        == SelectionKey.OP_ACCEPT) {
+        //这是招生老师的Key说明是新生注册，先找到招生老师，再由招生老师找到新生，就可以给新生注册学号了
+        ServerSocketChannel serverChanel = (ServerSocketChannel)key.channel(); //通过key把学校和老师找到了
+        //从serverSocketChannel中创建出与客户端的连接socketChannel 有了老师才有学生，不可能我教计算机的，来一个想学李小龙的都让他报名
+        SocketChannel sc = serverChanel.accept(); //学生报名成功
+        sc.configureBlocking( false );
+        // 把新连接注册到选择器,新生被接收后给注册个新学号
+        SelectionKey newKey = sc.register( selector,
+        SelectionKey.OP_READ ); //注册学号成功，并分配学生的权限
+        it.remove(); //新生注册任务完成了，呵呵
+        System.out.println( "Got connection from "+sc );
+        }else
+        //读客户端数据的事件,此时有客户端发数据过来,客户端事件 这是老学生来问问题了。
+        if((key.readyOps() & SelectionKey.OP_READ)== SelectionKey.OP_READ){
+        // 读取数据 ，接受学生的问题
+        SocketChannel sc = (SocketChannel)key.channel(); //通过学号知道是谁问的问题
+
+        //下面接受问题
+        int bytesEchoed = 0;
+        while((bytesEchoed = sc.read(echoBuffer))> 0){
+        System.out.println("bytesEchoed:"+bytesEchoed);
+        }
+        echoBuffer.flip();
+        System.out.println("limet:"+echoBuffer.limit());
+        byte [] content = new byte[echoBuffer.limit()];
+        echoBuffer.get(content);
+        String result=new String(content);
+        doPost(result,sc); //相应老师会去做回答的，细节自己去写吧
+        echoBuffer.clear();
+        it.remove(); //任务完成，记得上面也是一样，要remove掉，否则下一次又来一次任务，就死循环了
+        }
+        }catch(Exception e){}
+        }
+        }
+
+
+
+
+Netty:
+    Netty 是一个异步事件驱动的网络应用框架，用于快速开发可维护的高性能服务器和客户端。
+
+
+    使用 JDK 自带的NIO需要了解太多的概念，编程复杂，一不小心 bug 横飞
+    Netty 底层 IO 模型随意切换，而这一切只需要做微小的改动，改改参数，Netty可以直接从 NIO 模型变身为 IO 模型
+    Netty 自带的拆包解包，异常检测等机制让你从NIO的繁重细节中脱离出来，让你只需要关心业务逻辑
+    Netty 解决了 JDK 的很多包括空轮询在内的 Bug
+    Netty 底层对线程，selector 做了很多细小的优化，精心设计的 reactor 线程模型做到非常高效的并发处理
+    自带各种协议栈让你处理任何一种通用协议都几乎不用亲自动手
+    Netty 社区活跃，遇到问题随时邮件列表或者 issue
+    Netty 已经历各大 RPC 框架，消息中间件，分布式通信中间件线上的广泛验证，健壮性无比强大...
+
+

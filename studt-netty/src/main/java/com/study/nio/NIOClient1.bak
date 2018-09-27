@@ -1,0 +1,97 @@
+package com.study.netty.test.nio;
+
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
+import java.util.Iterator;
+import java.util.Set;
+
+/**
+ * @author Kevin
+ * @Title: NIOClient
+ * @ProjectName studyjava
+ * @Description: TODO
+ * @date 2018/9/27 15:24
+ */
+public class NIOClient1 {
+    static ByteBuffer buffer = ByteBuffer.allocate(1024);
+
+    static SocketChannel socketChannel = null;
+
+    private static Selector selector;
+
+    public static void main(String[] args) {
+
+        try {
+            //打开学生连接
+            socketChannel = SocketChannel.open();
+            socketChannel.configureBlocking(false);
+            //连接老师
+            selector = Selector.open();
+            socketChannel.register(selector, SelectionKey.OP_WRITE);
+            socketChannel.connect(new InetSocketAddress("127.0.0.1", 8000));
+
+            //判断已经成功连接到服务器  学生已经成功 连接到老师
+            if(socketChannel.finishConnect()){
+                while (true){
+                    selector.select(1);
+                        Set<SelectionKey> keys = selector.selectedKeys();
+                        Iterator<SelectionKey> iterator = keys.iterator();
+                        while (iterator.hasNext()){
+                            SelectionKey key = iterator.next();
+                            SocketChannel channel = (SocketChannel)key.channel();
+                            if(key.isWritable()) {
+                                //可以写了
+                                int i = 0;
+                                new Thread(() -> {
+                                    try {
+                                        while (true) {
+                                            Thread.sleep(3000);
+                                            write(socketChannel, i);
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }finally {
+                                        keys.clear();
+                                    }
+                                }).start();
+                                channel.register(selector, SelectionKey.OP_READ); //设置可以读取
+                            }
+
+                            if (key.isReadable()){
+                                read(socketChannel);
+                                keys.clear();
+                            }
+                        }
+                    }
+                }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+
+        }
+    }
+
+    public static void write(SocketChannel socketChannel, int i) throws Exception{
+        String info = "I'm "+i+++"-th information from client";
+        buffer.clear();
+        buffer.put(info.getBytes());
+        buffer.flip();
+        while(buffer.hasRemaining()){
+            System.out.println("发出消息:"+buffer);
+            socketChannel.write(buffer);
+        }
+    }
+
+    public static void read(SocketChannel socketChannel) throws Exception{
+        buffer.clear();
+        //以块儿为读取单位
+        socketChannel.read(buffer);
+        buffer.flip();
+        String data = Charset.defaultCharset().newDecoder().decode(buffer).toString();
+        System.out.println("收到消息:" + data);
+    }
+}
