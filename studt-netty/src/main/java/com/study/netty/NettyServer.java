@@ -8,6 +8,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
 
 /**
  * @author Kevin
@@ -18,15 +20,19 @@ import io.netty.handler.codec.string.StringDecoder;
  */
 public class NettyServer {
     public static void main(String[] args){
-        //启动器
+        //启动器 -- 创建引导类
         ServerBootstrap boot = new ServerBootstrap();
-        //负责处理连接
-        NioEventLoopGroup connect = new NioEventLoopGroup();
-        //负责处理数据
-        NioEventLoopGroup data = new NioEventLoopGroup();
+        //负责处理连接  --  相当于老板（在外面接活）
+        NioEventLoopGroup connectGroup = new NioEventLoopGroup();
+        //负责处理数据  --  相当于员工（做老板接的活）
+        NioEventLoopGroup dataGroup = new NioEventLoopGroup();
+        //老板（connectGroup）在外面接活，然后丢给员工去做
+        //员工（dataGroup）员工干活
 
+        //给引导类 配置两大线程组，这个类的线程模型也就定型了
         boot.
-                group(connect, data).
+                group(connectGroup, dataGroup).
+                //制定服务端的IO模型 -- 当然，这里也有其他的选择，如果你想指定 IO 模型为 BIO，那么这里配置上OioServerSocketChannel.class类型即可，当然通常我们也不会这么做，因为Netty的优势就在于NIO。
                 channel(NioServerSocketChannel.class).
                 //处理子 group -- 即为数据处理
                 childHandler(
@@ -49,6 +55,32 @@ public class NettyServer {
                                 );
                             }
                         }
-                ).bind(8000);
+                );
+
+        //绑定8000端口
+//        boot.bind(8000);
+
+        //自动绑定递增端口 , 假设8000端口被占用 我们需要寻找其他端口绑定
+
+        bind(boot, 8000);
+    }
+
+    private static void bind(ServerBootstrap boot, final int port){
+        boot.bind(port).addListener(new GenericFutureListener<Future<? super Void>>() {
+            @Override
+            public void operationComplete(Future<? super Void> future) throws Exception {
+                if(future.isSuccess()){
+                    System.out.println("成功绑定端口:"+ port);
+                }else{
+                    System.err.println("失败绑定端口:" + port);
+                    //端口 是 0~65535 [可以相应设计白名单/黑名单]
+                    if(port >= 65535){
+                        System.out.println("所有端口都绑定不成功");
+                        return;
+                    }
+                    bind(boot, port+1);
+                }
+            }
+        });
     }
 }
