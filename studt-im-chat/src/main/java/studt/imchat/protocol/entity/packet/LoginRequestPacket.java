@@ -13,7 +13,7 @@ import studt.imchat.util.EnumUtils;
 public class LoginRequestPacket extends Packet {
     @Override
     public Byte getCommand() {
-        return EnumUtils.ByteEnumUtils.getEnumCode(CommandeEnum.LOGIN_REQUEST);
+        return CommandeEnum.LOGIN_REQUEST.getCode();
     }
 
     /**

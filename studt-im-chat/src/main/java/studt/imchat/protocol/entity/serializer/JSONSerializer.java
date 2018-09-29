@@ -16,19 +16,16 @@ public class JSONSerializer implements Serializer {
 
     @Override
     public Byte getSerializerAlgorithm() {
-
-        return EnumUtils.ByteEnumUtils.getEnumCode(SerializerEnum.JSON);
+        return SerializerEnum.JSON.getCode();
     }
 
     @Override
     public <T> byte[] serialize(T object) {
-
         return JSON.toJSONBytes(object);
     }
 
     @Override
     public <T> T deserialize(Class<T> clazz, byte[] bytes) {
-
         return JSON.parseObject(bytes, clazz);
     }
 }

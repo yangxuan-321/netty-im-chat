@@ -5,6 +5,7 @@ import io.protostuff.ProtobufIOUtil;
 import io.protostuff.ProtostuffIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
+import studt.imchat.protocol.enums.SerializerEnum;
 
 /**
  * @author Kevin
@@ -16,7 +17,7 @@ import io.protostuff.runtime.RuntimeSchema;
 public class ProtostuffSerializer implements Serializer {
     @Override
     public Byte getSerializerAlgorithm() {
-        return null;
+        return SerializerEnum.PROTOSTUFF.getCode();
     }
 
     @Override

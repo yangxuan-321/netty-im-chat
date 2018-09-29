@@ -1,5 +1,7 @@
 package studt.imchat.protocol.entity.serializer;
 
+import studt.imchat.protocol.enums.SerializerEnum;
+
 /**
  * @author Kevin
  * @Title: XMLSerializer
@@ -10,7 +12,7 @@ package studt.imchat.protocol.entity.serializer;
 public class XMLSerializer implements Serializer {
     @Override
     public Byte getSerializerAlgorithm() {
-        return null;
+        return SerializerEnum.XML.getCode();
     }
 
     @Override
