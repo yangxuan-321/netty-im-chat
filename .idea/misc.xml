@@ -9,6 +9,7 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/studt-netty/pom.xml" />
+        <option value="$PROJECT_DIR$/studt-im-chat/pom.xml" />
       </list>
     </option>
   </component>

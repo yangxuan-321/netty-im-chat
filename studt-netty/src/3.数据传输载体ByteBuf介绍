@@ -1,0 +1,41 @@
+1.ByteBuf 是一个字节容器，容器里面的的数据分为三个部分，第一个部分是已经丢弃的字节，这部分数据是无效的；第二部分是可读字节，这部分数据是 ByteBuf 的主体数据， 从 ByteBuf 里面读取的数据都来自这一部分，最后一部分的数据是可写字节，所有写到 ByteBuf 的数据都会写到这一段。最后一部分虚线表示的是该 ByteBuf 最多还能扩容多少容量
+2.以上三段内容是被两个指针给划分出来的，从左到右，依次是读指针（readerIndex）、写指针（writerIndex），然后还有一个变量 capacity，表示 ByteBuf 底层内存的总容量
+3.从 ByteBuf 中每读取一个字节，readerIndex 自增1，ByteBuf 里面总共有 writerIndex-readerIndex 个字节可读, 由此可以推论出当 readerIndex 与 writerIndex 相等的时候，ByteBuf 不可读
+4.写数据是从 writerIndex 指向的部分开始写，每写一个字节，writerIndex 自增1，直到增到 capacity，这个时候，表示 ByteBuf 已经不可写了
+5.ByteBuf 里面其实还有一个参数 maxCapacity，当向 ByteBuf 写数据的时候，如果容量不足，那么这个时候可以进行扩容，直到 capacity 扩容到 maxCapacity，超过 maxCapacity 就会报错
+
+Netty 使用 ByteBuf 这个数据结构可以有效地区分可读数据和可写数据，读写之间相互没有冲突，当然，ByteBuf 只是对二进制数据的抽象，具体底层的实现我们在下面的小节会讲到，在这一小节，我们 只需要知道 Netty 关于数据读写只认 ByteBuf，下面，我们就来学习一下 ByteBuf 常用的 API...
+
+
+
+1.前者表示返回当前的读指针 readerIndex, 后者表示设置读指针
+    readerIndex() 与 readerIndex(int)
+
+2.前者表示返回当前的写指针 writerIndex, 后者表示设置写指针
+    writeIndex() 与 writeIndex(int)
+
+3.前者表示把当前的读指针保存起来，后者表示把当前的读指针恢复到之前保存的值
+    markReaderIndex() 与 resetReaderIndex()
+
+4.下面两段代码是等价的
+    // 代码片段1
+    int readerIndex = buffer.readerIndex();
+    // .. 其他操作
+    buffer.readerIndex(readerIndex);
+
+
+    // 代码片段二
+    buffer.markReaderIndex();
+    // .. 其他操作
+    buffer.resetReaderIndex();...
+
+    https://juejin.im
+    掘金 — 一个帮助开发者成长的社区
+
+希望大家多多使用代码片段二这种方式，不需要自己定义变量，无论 buffer 当作参数传递到哪里，调用 resetReaderIndex() 都可以恢复到之前的状态，在解析自定义协议的数据包的时候非常常见，推荐大家使用这一对 API
+
+markWriterIndex() 与 resetWriterIndex()...
+
+
+##@## get/set 不会改变读写指针，而 read/write 会改变读写指针，这点在解析数据的时候千万要注意
+
