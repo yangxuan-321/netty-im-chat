@@ -1,8 +1,10 @@
 package com.study.netty;
 
+import com.study.netty.handler.FirstServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -41,18 +43,22 @@ public class NettyServer {
 
                             @Override
                             protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
-                                //解码
-                                nioSocketChannel.pipeline().addLast(new StringDecoder());
-                                //输出
-                                nioSocketChannel.pipeline().addLast(
-                                        new SimpleChannelInboundHandler<String>() {
+                                //获取服务端侧关于这条连接的逻辑处理链 pipeline
+                                ChannelPipeline pipeline = nioSocketChannel.pipeline();
+                                pipeline.addLast(new FirstServerHandler());
 
-                                            @Override
-                                            protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
-                                                System.out.println(s);
-                                            }
-                                        }
-                                );
+//                                //解码
+//                                nioSocketChannel.pipeline().addLast(new StringDecoder());
+//                                //输出
+//                                nioSocketChannel.pipeline().addLast(
+//                                        new SimpleChannelInboundHandler<String>() {
+//
+//                                            @Override
+//                                            protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
+//                                                System.out.println(s);
+//                                            }
+//                                        }
+//                                );
                             }
                         }
                 );

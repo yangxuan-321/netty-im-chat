@@ -1,5 +1,6 @@
 package com.study.netty;
 
+import com.study.netty.handler.FirstClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -44,7 +45,8 @@ public class NettyClient {
 
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        socketChannel.pipeline().addLast(new StringEncoder());
+                        //socketChannel.pipeline().addLast(new StringEncoder());
+                        socketChannel.pipeline().addLast(new FirstClientHandler());
                     }
                 });
 
@@ -53,11 +55,13 @@ public class NettyClient {
         //此处连接有可能失败。因此需要有一定的重连机制
         try {
             ChannelFuture connect = connect(boot, "127.0.0.1", 8000, 5);
-            int i = 0;
-            while (true){
-                connect.channel().writeAndFlush("yangxuan"+i++);
-                Thread.sleep(2000);
-            }
+
+            //写数据
+//            int i = 0;
+//            while (true){
+//                connect.channel().writeAndFlush("yangxuan"+i++);
+//                Thread.sleep(2000);
+//            }
         }catch (Exception e){
             e.printStackTrace();
         }
