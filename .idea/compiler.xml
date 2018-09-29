@@ -8,8 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="studt-im-chat" />
         <module name="studt-netty" />
-        <module name="studyjava" />
+        <module name="study-java" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="study-netty" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
