@@ -1,5 +1,5 @@
 # netty-im-chat<br>
-主要 使用了 Netty<br>
+主要 使用了 Netty 实战im即时通信<br>
 
 以下是几个组件工程作用:<br>
 
