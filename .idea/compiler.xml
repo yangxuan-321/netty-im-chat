@@ -14,10 +14,5 @@
         <module name="netty-test" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="netty-im-chat-serer" target="1.8" />
-      <module name="studt-im-chat" target="1.8" />
-      <module name="study-java" target="1.7" />
-    </bytecodeTargetLevel>
   </component>
 </project>
