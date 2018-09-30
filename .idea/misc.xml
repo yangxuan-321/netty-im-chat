@@ -10,6 +10,11 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/studt-netty/pom.xml" />
         <option value="$PROJECT_DIR$/studt-im-chat/pom.xml" />
+        <option value="$PROJECT_DIR$/netty-im-chat-client/pom.xml" />
+        <option value="$PROJECT_DIR$/netty-test/pom.xml" />
+        <option value="$PROJECT_DIR$/netty-im-chat-server/pom.xml" />
+        <option value="$PROJECT_DIR$/netty-im-chat-common/pom.xml" />
+        <option value="$PROJECT_DIR$/netty-im-chat-util/pom.xml" />
       </list>
     </option>
   </component>

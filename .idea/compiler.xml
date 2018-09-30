@@ -6,13 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="studt-im-chat" />
-        <module name="studt-netty" />
-        <module name="study-java" />
+        <module name="netty-im-chat" />
+        <module name="netty-im-chat-client" />
+        <module name="netty-im-chat-common" />
+        <module name="netty-im-chat-server" />
+        <module name="netty-im-chat-util" />
+        <module name="netty-test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="study-netty" target="1.8" />
+      <module name="netty-im-chat-serer" target="1.8" />
+      <module name="studt-im-chat" target="1.8" />
+      <module name="study-java" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
