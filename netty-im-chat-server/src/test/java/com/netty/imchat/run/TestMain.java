@@ -1,6 +1,6 @@
 package com.netty.imchat.run;
 
-import com.netty.imchat.common.enums.CommandeEnum;
+import com.netty.imchat.common.enums.CommandEnum;
 
 /**
  * @author Kevin
@@ -11,6 +11,6 @@ import com.netty.imchat.common.enums.CommandeEnum;
  */
 public class TestMain {
     public static void main(String[] args) {
-        System.out.println(CommandeEnum.LOGIN_REQUEST instanceof Enum);
+        System.out.println(CommandEnum.LOGIN_REQUEST instanceof Enum);
     }
 }

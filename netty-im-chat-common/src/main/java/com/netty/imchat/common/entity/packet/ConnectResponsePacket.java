@@ -1,6 +1,6 @@
 package com.netty.imchat.common.entity.packet;
 
-import com.netty.imchat.common.enums.CommandeEnum;
+import com.netty.imchat.common.enums.CommandEnum;
 
 /**
  * @author Kevin
@@ -12,7 +12,7 @@ import com.netty.imchat.common.enums.CommandeEnum;
 public class ConnectResponsePacket extends Packet {
     @Override
     public Byte getCommand() {
-        return CommandeEnum.CONNECT_RESPONSE.getCode();
+        return CommandEnum.CONNECT_RESPONSE.getCode();
     }
 
     /**

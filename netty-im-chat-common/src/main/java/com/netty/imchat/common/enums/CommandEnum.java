@@ -11,7 +11,7 @@ import com.netty.imchat.common.entity.packet.LoginRequestPacket;
  * @Description: TODO 命令枚举
  * @date 2018/9/29 19:01
  */
-public enum CommandeEnum{
+public enum CommandEnum {
     LOGIN_REQUEST((byte)1, LoginRequestPacket.class),          //登录请求
     CONNECT_RESPONSE((byte)2, ConnectResponsePacket.class);
 
@@ -36,7 +36,7 @@ public enum CommandeEnum{
         this.clazz = clazz;
     }
 
-    CommandeEnum(Byte code, Class<? extends Packet> clazz) {
+    CommandEnum(Byte code, Class<? extends Packet> clazz) {
         this.code = code;
         this.clazz = clazz;
     }

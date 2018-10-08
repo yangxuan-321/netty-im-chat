@@ -46,4 +46,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         return PacketCodeUtil.encode(packet);
     }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        
+    }
 }

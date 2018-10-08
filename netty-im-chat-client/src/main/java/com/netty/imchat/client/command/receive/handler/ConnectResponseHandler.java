@@ -1,12 +1,14 @@
-package com.netty.imchat.client.command.handler;
+package com.netty.imchat.client.command.receive.handler;
 
 import com.netty.imchat.common.entity.packet.ConnectResponsePacket;
 import com.netty.imchat.common.entity.packet.Packet;
-import com.netty.imchat.common.enums.CommandeEnum;
+import com.netty.imchat.common.enums.CommandEnum;
 import com.netty.imchat.util.constant.Constant;
 import com.netty.imchat.util.digest.Md5Utils;
 import com.netty.imchat.util.exception.AppException;
 import io.netty.channel.ChannelHandlerContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -18,18 +20,20 @@ import org.springframework.util.StringUtils;
  * @date 2018/9/30 16:17
  */
 
-@Component("com.netty.imchat.client.command.handler.AbstractClientCmdHandler")
+@Component("com.netty.imchat.client.command.receive.handler.AbstractClientCmdHandler")
 public class ConnectResponseHandler extends AbstractClientCmdHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(ConnectResponseHandler.class);
 
     @Override
     public Byte getCode() {
-        return CommandeEnum.CONNECT_RESPONSE.getCode();
+        return CommandEnum.CONNECT_RESPONSE.getCode();
     }
 
     @Override
     protected void executeCust(ChannelHandlerContext ctx, Object msg, Packet packet) {
         if(!(packet instanceof ConnectResponsePacket)){
-            throw new AppException("pk不能为空"); //不能处理
+            throw new AppException("包结构不能被处理"); //不能处理
         }
 
         ConnectResponsePacket connectResponsePacket = (ConnectResponsePacket) packet;
@@ -45,6 +49,8 @@ public class ConnectResponseHandler extends AbstractClientCmdHandler {
             throw new AppException("PK的摘要不对"); //PK的摘要不对
         }
 
-        System.out.println("拿到pk");
+        //System.out.println("拿到pk");
+        log.info("pk为:"+publicKey);
+        this.setPublicKey(publicKey);
     }
 }

@@ -1,11 +1,7 @@
-package com.netty.imchat.client.command.handler;
+package com.netty.imchat.command.handler;
 
-import com.netty.imchat.client.command.manager.ClientCmdHandlerManager;
+import com.netty.imchat.client.command.receive.manager.ClientCmdHandlerManager;
 import com.netty.imchat.common.entity.packet.Packet;
-import com.netty.imchat.common.util.PacketCodeUtil;
-import com.netty.imchat.util.exception.AppException;
-import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -15,34 +11,14 @@ import io.netty.channel.ChannelHandlerContext;
  * @Description: TODO
  * @date 2018/9/30 16:22
  */
-public abstract class AbstractClientCmdHandler {
-    private String publicKey;
-
-    private Bootstrap boot;
-
-    protected String getPublicKey() {
-        return publicKey;
-    }
-
-    protected void setPublicKey(String publicKey) {
-        throw new AppException("不能写入pk");//不能写入pk
-    }
-
-    protected Bootstrap getBoot() {
-        return boot;
-    }
-
-    public void setBoot(Bootstrap boot) {
-        this.boot = boot;
-    }
-
+public abstract class AbstractServerCmdHandler {
     /**
      * 获得码值
      * @return
      */
     public abstract Byte getCode();
 
-    public AbstractClientCmdHandler(){
+    public AbstractServerCmdHandler(){
         ClientCmdHandlerManager.register(getCode(), this);
     }
 

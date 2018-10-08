@@ -17,6 +17,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class NettyClient {
 
+    private static BaseClientInfo clientInfo = BaseClientInfo.instance();
+
     public static final Integer MAX_RETRY = 5;
 
     public static void run() {
@@ -36,7 +38,8 @@ public class NettyClient {
         //4.建立连接
         //此处连接有可能失败。因此需要有一定的重连机制
         try {
-            connect(bootstrap, "127.0.0.1", 8000, 5);
+            ChannelFuture connect = connect(bootstrap, "127.0.0.1", 8000, 5);
+            clientInfo.setChannelFuture(connect);
         }catch (Exception e){
             e.printStackTrace();
         }

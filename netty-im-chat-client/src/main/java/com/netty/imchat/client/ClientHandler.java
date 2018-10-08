@@ -1,14 +1,14 @@
 package com.netty.imchat.client;
 
-import com.netty.imchat.client.command.handler.AbstractClientCmdHandler;
-import com.netty.imchat.client.command.manager.ClientCmdHandlerManager;
-import com.netty.imchat.common.entity.packet.ConnectResponsePacket;
+import com.netty.imchat.client.command.receive.handler.AbstractClientCmdHandler;
+import com.netty.imchat.client.command.receive.manager.ClientCmdHandlerManager;
 import com.netty.imchat.common.entity.packet.Packet;
 import com.netty.imchat.common.util.PacketCodeUtil;
-import com.netty.imchat.util.constant.Constant;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Kevin
@@ -19,6 +19,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  */
 public class ClientHandler extends ChannelInboundHandlerAdapter {
 
+    private static final Logger log = LoggerFactory.getLogger(ClientHandler.class);
+
     /**
      * 连接成功
      * @param ctx
@@ -26,7 +28,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("-----连接成功------");
+        log.info("-----连接成功------");
     }
 
     @Override

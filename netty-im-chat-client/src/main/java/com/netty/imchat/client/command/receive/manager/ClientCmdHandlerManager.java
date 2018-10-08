@@ -1,6 +1,6 @@
-package com.netty.imchat.client.command.manager;
+package com.netty.imchat.client.command.receive.manager;
 
-import com.netty.imchat.client.command.handler.AbstractClientCmdHandler;
+import com.netty.imchat.client.command.receive.handler.AbstractClientCmdHandler;
 import com.netty.imchat.util.exception.AppException;
 
 import java.util.HashMap;

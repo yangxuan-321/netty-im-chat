@@ -1,7 +1,7 @@
 package com.netty.imchat.common.util;
 
 import com.netty.imchat.common.entity.packet.Packet;
-import com.netty.imchat.common.enums.CommandeEnum;
+import com.netty.imchat.common.enums.CommandEnum;
 import com.netty.imchat.common.factory.SerializerFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -72,10 +72,10 @@ public class PacketCodeUtil {
     }
 
     public static Class<? extends Packet> getCommandType(byte command){
-        CommandeEnum[] values = CommandeEnum.values();
-        for (CommandeEnum commandeEnum: values) {
-            if(commandeEnum.getCode() == command){
-                return commandeEnum.getClazz();
+        CommandEnum[] values = CommandEnum.values();
+        for (CommandEnum commandEnum : values) {
+            if(commandEnum.getCode() == command){
+                return commandEnum.getClazz();
             }
         }
 
