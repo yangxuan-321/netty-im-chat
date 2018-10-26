@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="netty-im-chat" />
         <module name="netty-im-chat-client" />
+        <module name="netty-im-chat-client-ui" />
         <module name="netty-im-chat-common" />
         <module name="netty-im-chat-server" />
         <module name="netty-im-chat-util" />

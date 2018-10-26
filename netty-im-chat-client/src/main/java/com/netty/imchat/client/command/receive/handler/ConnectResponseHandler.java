@@ -1,5 +1,6 @@
 package com.netty.imchat.client.command.receive.handler;
 
+import com.netty.imchat.client.BaseClientInfo;
 import com.netty.imchat.common.entity.packet.ConnectResponsePacket;
 import com.netty.imchat.common.entity.packet.Packet;
 import com.netty.imchat.common.enums.CommandEnum;
@@ -30,6 +31,8 @@ public class ConnectResponseHandler extends AbstractClientCmdHandler {
         return CommandEnum.CONNECT_RESPONSE.getCode();
     }
 
+    private static BaseClientInfo clientInfo = BaseClientInfo.instance();
+
     @Override
     protected void executeCust(ChannelHandlerContext ctx, Object msg, Packet packet) {
         if(!(packet instanceof ConnectResponsePacket)){
@@ -51,6 +54,6 @@ public class ConnectResponseHandler extends AbstractClientCmdHandler {
 
         //System.out.println("拿到pk");
         log.info("pk为:"+publicKey);
-        this.setPublicKey(publicKey);
+        clientInfo.setPublicKey(publicKey);
     }
 }
