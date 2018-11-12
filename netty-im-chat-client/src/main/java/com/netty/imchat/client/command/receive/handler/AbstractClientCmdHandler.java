@@ -2,8 +2,6 @@ package com.netty.imchat.client.command.receive.handler;
 
 import com.netty.imchat.client.command.receive.manager.ClientCmdHandlerManager;
 import com.netty.imchat.common.entity.packet.Packet;
-import com.netty.imchat.util.exception.AppException;
-import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelHandlerContext;
 
 /**

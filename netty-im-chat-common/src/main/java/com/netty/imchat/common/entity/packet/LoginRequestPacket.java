@@ -16,14 +16,9 @@ public class LoginRequestPacket extends Packet {
     }
 
     /**
-     * 用户ID
-     */
-    private Integer userId;
-
-    /**
      * 用户姓名
      */
-    private String username;
+    private String loginCode;
 
     /**
      * 用户密码
@@ -31,20 +26,12 @@ public class LoginRequestPacket extends Packet {
     private String password;
 
 
-    public Integer getUserId() {
-        return userId;
+    public String getLoginCode() {
+        return loginCode;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLoginCode(String loginCode) {
+        this.loginCode = loginCode;
     }
 
     public String getPassword() {

@@ -28,16 +28,19 @@ public class LoginRequestSend {
 
     private BaseClientInfo clientInfo = BaseClientInfo.instance();
 
+    public LoginRequestSend() {
+        CommandFacde.LOGIN_REQUEST_SEND = this;
+    }
+
     @Resource(name="com.netty.imchat.client.command.send.BaseSend")
     private Send send;
 
-    public void login(Integer userId, String userName, String password) {
+    public void login(String loginCode, String password) {
         try {
             LoginRequestPacket packet = new LoginRequestPacket();
-            packet.setUserId(userId);
             byte[] passwd = RSAUtils.encryptByPublicKey((password+Md5Utils.hash(password)).getBytes(), clientInfo.getPublicKey());
             packet.setPassword(Base64Utils.encode(passwd));
-            packet.setUsername(userName);
+            packet.setLoginCode(loginCode);
             send.send(packet);
         }catch (Exception e){
             throw new AppException(e.getMessage());

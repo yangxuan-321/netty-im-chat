@@ -21,7 +21,7 @@ import org.springframework.util.StringUtils;
  * @date 2018/9/30 16:17
  */
 
-@Component("com.netty.imchat.client.command.receive.handler.AbstractClientCmdHandler")
+@Component("com.netty.imchat.client.command.receive.handler.ConnectResponseHandler")
 public class ConnectResponseHandler extends AbstractClientCmdHandler {
 
     private static final Logger log = LoggerFactory.getLogger(ConnectResponseHandler.class);
