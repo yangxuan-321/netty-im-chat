@@ -13,9 +13,9 @@ import com.netty.imchat.common.entity.packet.LoginRequestPacket;
  * @date 2018/9/29 19:01
  */
 public enum CommandEnum {
-    LOGIN_REQUEST((byte)1, LoginRequestPacket.class),          //登录请求
-    CONNECT_RESPONSE((byte)2, ConnectResponsePacket.class),
-    LOGIN_RESPONSE((byte)3, LoginResponsePacket.class);          //登录响应
+    LOGIN_REQUEST((byte)1, LoginRequestPacket.class),           //登录请求
+    CONNECT_RESPONSE((byte)2, ConnectResponsePacket.class),     //连接响应
+    LOGIN_RESPONSE((byte)3, LoginResponsePacket.class);         //登录响应
 
     //CODE
     private Byte code;
