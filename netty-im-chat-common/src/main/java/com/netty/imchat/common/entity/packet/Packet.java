@@ -26,4 +26,30 @@ public abstract class Packet {
      * @return
      */
     public abstract Byte getCommand();
+
+    /**
+     * 执行状态码
+     */
+    private int code;
+
+    /**
+     * 执行信息
+     */
+    private String message;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

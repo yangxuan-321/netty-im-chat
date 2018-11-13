@@ -1,6 +1,7 @@
 package com.netty.imchat.common.enums;
 
 import com.netty.imchat.common.entity.packet.ConnectResponsePacket;
+import com.netty.imchat.common.entity.packet.LoginResponsePacket;
 import com.netty.imchat.common.entity.packet.Packet;
 import com.netty.imchat.common.entity.packet.LoginRequestPacket;
 
@@ -13,7 +14,8 @@ import com.netty.imchat.common.entity.packet.LoginRequestPacket;
  */
 public enum CommandEnum {
     LOGIN_REQUEST((byte)1, LoginRequestPacket.class),          //登录请求
-    CONNECT_RESPONSE((byte)2, ConnectResponsePacket.class);
+    CONNECT_RESPONSE((byte)2, ConnectResponsePacket.class),
+    LOGIN_RESPONSE((byte)3, LoginResponsePacket.class);          //登录响应
 
     //CODE
     private Byte code;

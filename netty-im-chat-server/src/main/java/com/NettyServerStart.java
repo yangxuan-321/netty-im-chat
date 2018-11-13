@@ -1,6 +1,7 @@
 package com;
 
 import com.netty.imchat.protocol.server.NettyServer;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class NettyServerStart {
     public static void main(String[] args) {
+        SpringApplication.run(NettyServerStart.class, args);
         //启动
         NettyServer.run();
     }
