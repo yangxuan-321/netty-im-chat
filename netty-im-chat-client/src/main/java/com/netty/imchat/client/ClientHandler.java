@@ -36,6 +36,12 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         Packet packet = PacketCodeUtil.decode((ByteBuf) msg);
 
         AbstractClientCmdHandler cmdHandler = ClientCmdHandlerManager.getClientCmdHandler(packet.getCommand());
+
+        if(null == cmdHandler){
+            log.info("-----cmdHandler为空-----");
+            return;
+        }
+
         cmdHandler.execute(ctx, msg, packet);
     }
 }

@@ -73,7 +73,7 @@ public class LoginHandler extends AbstractServerCmdHandler {
         }
 
         //3.将响应信息回写 客户端
-        PacketWriteUtil.writeRes(packet, ctx);
+        PacketWriteUtil.writeRes(responsePacket, ctx);
     }
 
     /**
