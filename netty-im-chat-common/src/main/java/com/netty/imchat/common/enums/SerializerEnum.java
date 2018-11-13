@@ -9,7 +9,7 @@ import com.netty.imchat.common.entity.serializer.JSONSerializer;
  * @author Kevin
  * @Title: Serializer
  * @ProjectName studyjava
- * @Description: TODO
+ * @Description: TODO 序列化方式 -- 枚举
  * @date 2018/9/29 19:48
  */
 public enum SerializerEnum {

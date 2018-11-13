@@ -11,7 +11,7 @@ import java.util.Map;
  * @author Kevin
  * @Title: SerializerFactory
  * @ProjectName studyjava
- * @Description: TODO  单例工厂
+ * @Description: TODO  序列化工具类的 -- 单例工厂
  * @date 2018/9/29 20:11
  */
 public class SerializerFactory {

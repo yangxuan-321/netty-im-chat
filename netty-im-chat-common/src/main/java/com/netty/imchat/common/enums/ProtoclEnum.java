@@ -4,7 +4,7 @@ package com.netty.imchat.common.enums;
  * @author Kevin
  * @Title: ProtoclEnum
  * @ProjectName studyjava
- * @Description: TODO  协议版本枚举
+ * @Description: TODO  通信协议版本枚举
  * @date 2018/9/29 18:50
  */
 public enum ProtoclEnum {

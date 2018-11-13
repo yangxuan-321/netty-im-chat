@@ -7,7 +7,7 @@ import com.netty.imchat.common.util.EnumUtils;
  * @author Kevin
  * @Title: Packaet
  * @ProjectName studyjava
- * @Description: TODO 基础 通信协议类 抽象类
+ * @Description: TODO 基础 通信包 抽象类
  * @date 2018/9/29 18:47
  */
 public abstract class Packet {

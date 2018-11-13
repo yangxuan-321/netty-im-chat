@@ -4,7 +4,7 @@ package com.netty.imchat.common.util;
  * @author Kevin
  * @Title: EnumUtils
  * @ProjectName studyjava
- * @Description: TODO
+ * @Description: TODO 操作枚举的工具类
  * @date 2018/9/29 19:16
  */
 public final class EnumUtils {

@@ -6,7 +6,7 @@ import com.netty.imchat.common.enums.CommandEnum;
  * @author Kevin
  * @Title: LoginRequestPacket
  * @ProjectName studyjava
- * @Description: TODO
+ * @Description: TODO 登录请求包
  * @date 2018/9/29 19:06
  */
 public class LoginRequestPacket extends Packet {

@@ -7,7 +7,7 @@ import com.netty.imchat.common.enums.CommandEnum;
  * @author Kevin
  * @Title: LoginResponsePacket
  * @ProjectName netty-im-chat
- * @Description: TODO
+ * @Description: TODO 登录响应包
  * @date 2018/11/13 15:46
  */
 public class LoginResponsePacket extends Packet {
