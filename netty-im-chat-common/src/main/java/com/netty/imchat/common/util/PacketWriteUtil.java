@@ -12,6 +12,12 @@ import io.netty.channel.ChannelHandlerContext;
  * @date 2018/11/13 17:21
  */
 public class PacketWriteUtil {
+
+    /**
+     * 将 处理完的 响应数据 回写
+     * @param packet
+     * @param ctx
+     */
     public static void writeRes(Packet packet, ChannelHandlerContext ctx){
         ByteBuf byteBuf = PacketCodeUtil.encode(packet);
         ctx.channel().writeAndFlush(byteBuf);
