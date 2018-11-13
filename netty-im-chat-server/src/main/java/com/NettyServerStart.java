@@ -1,5 +1,6 @@
-package com.netty.imchat.protocol.server;
+package com;
 
+import com.netty.imchat.protocol.server.NettyServer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**

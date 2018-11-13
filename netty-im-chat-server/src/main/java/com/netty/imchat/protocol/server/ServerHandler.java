@@ -1,5 +1,7 @@
 package com.netty.imchat.protocol.server;
 
+import com.netty.imchat.command.handler.AbstractServerCmdHandler;
+import com.netty.imchat.command.manager.ServerCmdHandlerManager;
 import com.netty.imchat.common.entity.packet.ConnectResponsePacket;
 import com.netty.imchat.common.entity.packet.Packet;
 import com.netty.imchat.common.util.PacketCodeUtil;
@@ -49,6 +51,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        
+        Packet packet = PacketCodeUtil.decode((ByteBuf) msg);
+
+        AbstractServerCmdHandler cmdHandler = ServerCmdHandlerManager.getClientCmdHandler(packet.getCommand());
+        cmdHandler.execute(ctx, msg, packet);
     }
 }
