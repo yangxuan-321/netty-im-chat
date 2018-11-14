@@ -23,12 +23,12 @@ public class MultiChatMessRequestPacket extends AbsChatMessRequestPacket {
     private String groupId;
 
     /**
-     * 是否 @ 所有人
+     * 是否 @--提醒 所有人
      */
     private byte isAtAll;
 
     /**
-     * @ 的人员列表
+     * @--提醒 的人员列表
      */
     private List<Long> atUserIds;
 
