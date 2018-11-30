@@ -30,7 +30,7 @@ public class ClientUIMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/com/javafx/main/sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/javafx/main/login.fxml"));
         primaryStage.setTitle("天涯共此时");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 500, 300));

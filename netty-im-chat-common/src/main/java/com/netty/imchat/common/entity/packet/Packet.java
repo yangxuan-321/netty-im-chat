@@ -2,6 +2,7 @@ package com.netty.imchat.common.entity.packet;
 
 import com.netty.imchat.common.enums.ProtoclEnum;
 import com.netty.imchat.common.util.EnumUtils;
+import com.netty.imchat.util.constant.HttpStatus;
 
 /**
  * @author Kevin
@@ -51,5 +52,18 @@ public abstract class Packet {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+
+    /**
+     * 是否成功
+     * @return
+     */
+    public boolean isSuccess(){
+        if(HttpStatus.SC_OK == code){
+            return true;
+        }
+
+        return false;
     }
 }

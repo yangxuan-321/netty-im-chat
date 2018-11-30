@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="616.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.main.Message">
+   <children>
+      <TextArea layoutX="183.0" layoutY="461.0" prefHeight="103.0" prefWidth="532.0" />
+      <Button layoutX="636.0" layoutY="577.0" mnemonicParsing="false" text="发送(S)" />
+   </children>
+</AnchorPane>
