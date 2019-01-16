@@ -18,11 +18,21 @@ public class LoginResponsePacket extends Packet {
 
     private UserInfoVO userInfoVO;
 
+    private String token;
+
     public UserInfoVO getUserInfoVO() {
         return userInfoVO;
     }
 
     public void setUserInfoVO(UserInfoVO userInfoVO) {
         this.userInfoVO = userInfoVO;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

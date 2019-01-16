@@ -30,10 +30,11 @@ public class ClientUIMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/com/javafx/main/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/javafx/main/message.fxml"));
         primaryStage.setTitle("天涯共此时");
         primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 500, 300));
+//        primaryStage.setScene(new Scene(root, 500, 300));
+        primaryStage.setScene(new Scene(root, 700, 600));
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/login_back.jpg")));
         primaryStage.setOnCloseRequest(event -> System.exit(0));
         primaryStage.show();

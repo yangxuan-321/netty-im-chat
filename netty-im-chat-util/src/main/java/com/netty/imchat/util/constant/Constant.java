@@ -1,5 +1,8 @@
 package com.netty.imchat.util.constant;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Kevin
  * @Title: Constant
@@ -9,4 +12,9 @@ package com.netty.imchat.util.constant;
  */
 public interface Constant {
     public static final int MD5_LENGTH = 32;
+
+    /**
+     * 空数组
+     */
+    public static final Object[] EMPTY_ARRAY = new Object[0];
 }

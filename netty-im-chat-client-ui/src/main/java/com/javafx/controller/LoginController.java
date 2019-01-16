@@ -1,5 +1,7 @@
 package com.javafx.controller;
 
+import com.callback.LoginCallBack;
+import com.netty.imchat.client.command.receive.handler.LoginResponseHandler;
 import com.netty.imchat.client.command.send.CommandFacde;
 import com.netty.imchat.client.command.send.LoginRequestSend;
 import com.netty.imchat.util.general.StringUtils;
@@ -11,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @FXMLController
 public class LoginController {
+
+    public LoginController() {
+        LoginResponseHandler.callBack = new LoginCallBack();
+    }
 
     @FXML
     private TextField loginName;
@@ -29,7 +35,6 @@ public class LoginController {
         if(StringUtils.isEmpty(passwordStr)){
             System.out.println("password不能为空");
         }
-
         CommandFacde.LOGIN_REQUEST_SEND.login(loginNameStr, passwordStr);
     }
 }
