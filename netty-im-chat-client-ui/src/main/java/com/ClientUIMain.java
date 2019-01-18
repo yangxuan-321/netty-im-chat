@@ -13,7 +13,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import javax.swing.*;
 import java.util.concurrent.CompletableFuture;
-
+ 
 @SpringBootApplication
 public class ClientUIMain extends Application {
 
