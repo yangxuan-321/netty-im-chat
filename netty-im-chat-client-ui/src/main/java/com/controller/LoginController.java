@@ -10,12 +10,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 @FXMLController
 public class LoginController extends BaseController implements Initializable {
+
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     public static final String CONTROLLER_CODE = "LoginController";
 
@@ -37,30 +41,26 @@ public class LoginController extends BaseController implements Initializable {
     @FXML
     private Label resultTips;
 
-    private int i;
-
     @FXML
     protected void doLogin(ActionEvent event) {
         String loginNameStr = loginName.getText();
         String passwordStr = password.getText();
         if(StringUtils.isEmpty(loginNameStr)){
-            System.out.println("loginCode不能为空");
+            log.info("loginCode不能为空");
         }
 
         if(StringUtils.isEmpty(passwordStr)){
-            System.out.println("password不能为空");
+            log.info("password不能为空");
         }
         CommandFacde.LOGIN_REQUEST_SEND.login(loginNameStr, passwordStr);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("初始化");
-        System.out.println(this);
+        log.info("初始化");
     }
 
     public void setLoginTips(String tipsMessage){
-        System.out.println(this);
         resultTips.setText(tipsMessage);
     }
 

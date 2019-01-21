@@ -1,6 +1,9 @@
 package com.study.nio;
 
+import com.study.bio.SocketIOServer;
 import io.netty.util.internal.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.net.InetSocketAddress;
@@ -17,6 +20,9 @@ import java.nio.charset.Charset;
  * @date 2018/9/27 15:24
  */
 public class NIOClient {
+
+    private static final Logger log = LoggerFactory.getLogger(NIOClient.class);
+
     static ByteBuffer buffer = ByteBuffer.allocate(1024);
 
     static SocketChannel socketChannel = null;
@@ -45,7 +51,7 @@ public class NIOClient {
                         Thread.sleep(1);
                         read = read(socketChannel);
                     }
-                    System.out.println("收到消息:" + read);
+                    log.info("收到消息:" + read);
                 }
             }
         }catch (Exception e){
@@ -61,7 +67,7 @@ public class NIOClient {
         buffer.put(info.getBytes());
         buffer.flip();
         while(buffer.hasRemaining()){
-            System.out.println("发出消息:"+info);
+            log.info("发出消息:"+info);
             socketChannel.write(buffer);
         }
     }

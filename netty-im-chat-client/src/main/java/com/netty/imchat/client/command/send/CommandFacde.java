@@ -11,4 +11,6 @@ import org.springframework.stereotype.Component;
  */
 public class CommandFacde {
     public static LoginRequestSend LOGIN_REQUEST_SEND;
+
+    public static MessageRequestSend MESSAGE_REQUEST_SEND;
 }

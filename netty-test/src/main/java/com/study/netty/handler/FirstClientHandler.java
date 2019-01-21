@@ -4,6 +4,8 @@ import com.study.util.DateTimeUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 
@@ -16,6 +18,8 @@ import java.nio.charset.Charset;
  */
 public class FirstClientHandler extends ChannelInboundHandlerAdapter {
 
+    private static final Logger log = LoggerFactory.getLogger(ChannelInboundHandlerAdapter.class);
+
     /**
      * 重写 channelActive方法。在连接被建立之后就会被调用
      * @param ctx
@@ -25,7 +29,7 @@ public class FirstClientHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         //1.获取数据
         ByteBuf buf = getData(ctx);
-        System.out.println("-------客户端写出消息-------");
+        log.info("-------客户端写出消息-------");
         //2.向服务器写数据
         ctx.channel().writeAndFlush(buf);
     }
@@ -55,6 +59,6 @@ public class FirstClientHandler extends ChannelInboundHandlerAdapter {
     private void read(Object msg){
         ByteBuf byteBuf = (ByteBuf)msg;
         String data = byteBuf.toString(Charset.forName("UTF-8"));
-        System.out.println("客户端收到消息: " + data);
+        log.info("客户端收到消息: " + data);
     }
 }

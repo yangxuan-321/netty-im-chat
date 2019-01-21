@@ -12,6 +12,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Kevin
@@ -21,6 +23,9 @@ import io.netty.util.concurrent.GenericFutureListener;
  * @date 2018/9/27 18:23
  */
 public class NettyServer {
+
+    private static final Logger log = LoggerFactory.getLogger(NettyServer.class);
+
     public static void main(String[] args){
         //启动器 -- 创建引导类
         ServerBootstrap boot = new ServerBootstrap();
@@ -76,12 +81,12 @@ public class NettyServer {
             @Override
             public void operationComplete(Future<? super Void> future) throws Exception {
                 if(future.isSuccess()){
-                    System.out.println("成功绑定端口:"+ port);
+                    log.info("成功绑定端口:"+ port);
                 }else{
-                    System.err.println("失败绑定端口:" + port);
+                    log.info("失败绑定端口:" + port);
                     //端口 是 0~65535 [可以相应设计白名单/黑名单]
                     if(port >= 65535){
-                        System.out.println("所有端口都绑定不成功");
+                        log.info("所有端口都绑定不成功");
                         return;
                     }
                     bind(boot, port+1);

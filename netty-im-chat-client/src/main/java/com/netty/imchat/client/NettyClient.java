@@ -1,10 +1,14 @@
 package com.netty.imchat.client;
 
+import com.netty.imchat.client.command.receive.handler.LoginResponseHandler;
+import com.netty.imchat.common.splitpack.SplitPackageDecoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +20,8 @@ import java.util.concurrent.TimeUnit;
  * @date 2018/9/30 15:38
  */
 public class NettyClient {
+
+    private static final Logger log = LoggerFactory.getLogger(NettyClient.class);
 
     private static BaseClientInfo clientInfo = BaseClientInfo.instance();
 
@@ -31,6 +37,10 @@ public class NettyClient {
                 handler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
+                        //可以简单把 pipeline 理解成责任链
+                        //1.客户端接受消息的拆包处理(解决粘包和半包)
+                        nioSocketChannel.pipeline().addLast(new SplitPackageDecoder());
+                        //2.客户端接受消息的逻辑处理
                         nioSocketChannel.pipeline().addLast(new ClientHandler());
                     }
                 });
@@ -54,14 +64,14 @@ public class NettyClient {
     private static ChannelFuture connect(Bootstrap boot, String host, int port, int retryCount){
         return boot.connect(host, port).addListener(future -> {
             if(future.isSuccess()){
-                System.out.println("客户端连接建立成功");
+                log.info("客户端连接建立成功");
             }else if(retryCount == 0){
-                System.out.println("重试连接次数已经用完，放弃连接");
+                log.info("重试连接次数已经用完，放弃连接");
                 throw new RuntimeException("重试连接次数已经用完，放弃连接");
             }else{
                 //重连的次数
                 int count = MAX_RETRY - retryCount + 1;
-                System.out.println("连接失败,第"+ count +"次重连");
+                log.info("连接失败,第"+ count +"次重连");
                 //重连的间隔
                 int delay = 1 << count;
                 boot.config().group().schedule(()->{connect(boot, host, port, retryCount - 1);}, delay, TimeUnit.SECONDS);

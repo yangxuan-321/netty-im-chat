@@ -4,6 +4,8 @@ import com.study.util.DateTimeUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 
@@ -15,6 +17,8 @@ import java.nio.charset.Charset;
  * @date 2018/9/29 16:45
  */
 public class FirstServerHandler extends ChannelInboundHandlerAdapter {
+
+    private static final Logger log = LoggerFactory.getLogger(ChannelInboundHandlerAdapter.class);
 
     /**
      * 这个方法在接收到客户端发来的数据之后被回调
@@ -38,7 +42,7 @@ public class FirstServerHandler extends ChannelInboundHandlerAdapter {
     private void read(Object msg){
         ByteBuf byteBuf = (ByteBuf) msg;
         String data = byteBuf.toString(Charset.forName("UTF-8"));
-        System.out.println("服务端收到消息: " + data);
+        log.info("服务端收到消息: " + data);
     }
 
     /**
@@ -47,7 +51,7 @@ public class FirstServerHandler extends ChannelInboundHandlerAdapter {
      */
     private void write(ChannelHandlerContext ctx){
         ByteBuf byteBuf = ctx.alloc().buffer();
-        System.out.println("-------服务端写出消息-------");
+        log.info("-------服务端写出消息-------");
         byteBuf.writeBytes((DateTimeUtil.getNowTime() + " 服务端已经读取到消息").getBytes(Charset.forName("UTF-8")));
         ctx.writeAndFlush(byteBuf);
     }

@@ -16,7 +16,10 @@ import com.netty.imchat.common.enums.SerializerEnum;
  * @date 2018/9/29 20:54
  */
 public class PacketCodeUtil {
-    private static final int MAGIC_NUMBER = 0x12345678;
+    /**
+     * 魔数  代表协议版本
+     */
+    public static final int MAGIC_NUMBER = 0x12345678;
 
     public static ByteBuf encode(Packet packet) {
         Serializer serializer = SerializerFactory.defaultSeralizer();

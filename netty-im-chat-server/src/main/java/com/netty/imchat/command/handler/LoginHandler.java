@@ -117,13 +117,13 @@ public class LoginHandler extends AbstractServerCmdHandler {
 
             //至少是32位
             if(password.length() < 32){
-                System.out.println("-----传输数据长度小于32位，传输数据被篡改-----");
+                log.info("-----传输数据长度小于32位，传输数据被篡改-----");
                 return null;
             }
-            String passwdContent = password.substring(0, password.length()- 32);
-            String hash = password.substring(password.length()- 32);
+            String passwdContent = password.substring(0, password.length()- Constant.MD5_LENGTH);
+            String hash = password.substring(password.length()- Constant.MD5_LENGTH);
             if(!Md5Utils.hash(passwdContent).equals(hash)){
-                System.out.println("-----数据校验出错，传输数据被篡改-----");
+                log.info("-----数据校验出错，传输数据被篡改-----");
                 return null;
             }
 

@@ -8,6 +8,13 @@ package com.netty.imchat.common.entity.vo;
  * @date 2018/11/13 15:50
  */
 public class UserInfoVO {
+    /**
+     * 用户ID
+     */
+    private String userId = "";
+    /**
+     * 登录名
+     */
     private String loginCode;
     /**
      * 用户名
