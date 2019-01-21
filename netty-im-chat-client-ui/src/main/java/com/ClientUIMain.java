@@ -1,31 +1,24 @@
 package com;
 
-import com.javafx.controller.BaseUIInfo;
-import com.javafx.controller.LoginController;
-import com.javafx.controller.MessageController;
+import com.route.node.NodeRouter;
+import com.cache.BaseUIInfo;
 import com.netty.imchat.client.NettyClient;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Scene;
+import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import javax.swing.*;
-import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 
 @SpringBootApplication
-public class ClientUIMain extends Application {
+public class ClientUIMain extends AbstractJavaFxApplicationSupport {
 
     public static ConfigurableApplicationContext applicationContext;
 
-    private Stage stage;
+    public static Stage stage;
 
     @Override
     public void init() throws Exception {
@@ -45,44 +38,9 @@ public class ClientUIMain extends Application {
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/login_back.jpg")));
         primaryStage.setOnCloseRequest(event -> System.exit(0));
-        gotoLogin();
+        NodeRouter.gotoLogin();
         primaryStage.show();
     }
-
-    public void gotoLogin(){
-        try {
-            LoginController login = (LoginController) replaceSceneContent("/com/javafx/main/login.fxml", 500, 300);
-            login.setApp(this);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    public void gotoMessage(){
-        try {
-            MessageController message = (MessageController) replaceSceneContent("/com/javafx/main/message.fxml", 735, 615);
-            message.setApp(this);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private Initializable replaceSceneContent(String fxml, int width, int height) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        InputStream in = ClientUIMain.class.getResourceAsStream(fxml);
-        loader.setBuilderFactory(new JavaFXBuilderFactory());
-        loader.setLocation(ClientUIMain.class.getResource(fxml));
-        Pane page;
-        try {
-            page = (Pane) loader.load(in);
-        } finally {
-            in.close();
-        }
-        Scene scene = new Scene(page, width, height);
-        stage.setScene(scene);
-        stage.sizeToScene();
-        return (Initializable) loader.getController();
-    }
-
 
     public static void main(String[] args) {
         try {

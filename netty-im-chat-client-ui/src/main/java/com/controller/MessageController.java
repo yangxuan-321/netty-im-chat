@@ -1,4 +1,4 @@
-package com.javafx.controller;
+package com.controller;
 
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.fxml.Initializable;
@@ -27,5 +27,4 @@ public class MessageController extends BaseController implements Initializable {
         return CONTROLLER_CODE;
     }
 
-    
 }

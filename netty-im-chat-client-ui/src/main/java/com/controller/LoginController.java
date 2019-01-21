@@ -1,10 +1,8 @@
-package com.javafx.controller;
+package com.controller;
 
-import com.ClientUIMain;
 import com.callback.LoginCallBack;
 import com.netty.imchat.client.command.receive.handler.LoginResponseHandler;
 import com.netty.imchat.client.command.send.CommandFacde;
-import com.netty.imchat.client.command.send.LoginRequestSend;
 import com.netty.imchat.util.general.StringUtils;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.event.ActionEvent;
@@ -12,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,6 +37,8 @@ public class LoginController extends BaseController implements Initializable {
     @FXML
     private Label resultTips;
 
+    private int i;
+
     @FXML
     protected void doLogin(ActionEvent event) {
         String loginNameStr = loginName.getText();
@@ -56,10 +55,13 @@ public class LoginController extends BaseController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        System.out.println("初始化");
+        System.out.println(this);
     }
 
     public void setLoginTips(String tipsMessage){
-//        resultTips.setText(tipsMessage);
+        System.out.println(this);
+        resultTips.setText(tipsMessage);
     }
+
 }

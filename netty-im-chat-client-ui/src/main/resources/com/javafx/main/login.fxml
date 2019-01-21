@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" style="-fx-background-image: url('login_back.jpg'); -fx-background-color: #FAF0E6;" stylesheets="@login.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controller.LoginController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" style="-fx-background-image: url('login_back.jpg'); -fx-background-color: #FAF0E6;" stylesheets="@login.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.LoginController">
     <children>
         <Button layoutX="135.0" layoutY="247.0" mnemonicParsing="false" onAction="#doLogin" prefHeight="38.0" prefWidth="108.0" style="-fx-border-radius: 5" text="登录" />
         <Button layoutX="293.0" layoutY="247.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" text="注册" />

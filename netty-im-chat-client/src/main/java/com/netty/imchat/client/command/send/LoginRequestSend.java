@@ -6,6 +6,7 @@ import com.netty.imchat.common.entity.packet.LoginRequestPacket;
 import com.netty.imchat.common.entity.packet.Packet;
 import com.netty.imchat.common.enums.CommandEnum;
 import com.netty.imchat.common.util.PacketCodeUtil;
+import com.netty.imchat.util.constant.Constant;
 import com.netty.imchat.util.digest.Base64Utils;
 import com.netty.imchat.util.digest.Md5Utils;
 import com.netty.imchat.util.digest.RSAUtils;
@@ -38,8 +39,10 @@ public class LoginRequestSend {
     public void login(String loginCode, String password) {
         try {
             LoginRequestPacket packet = new LoginRequestPacket();
-            byte[] passwd = RSAUtils.encryptByPublicKey((password+Md5Utils.hash(password)).getBytes(), clientInfo.getPublicKey());
-            packet.setPassword(Base64Utils.encode(passwd));
+            byte[] passwd = RSAUtils.encryptByPublicKey(password.getBytes(), clientInfo.getPublicKey());
+            String encode = Base64Utils.encode(passwd);
+            String hash = Md5Utils.hash(encode);
+            packet.setPassword(encode+hash);
             packet.setLoginCode(loginCode);
             send.send(packet);
         }catch (Exception e){

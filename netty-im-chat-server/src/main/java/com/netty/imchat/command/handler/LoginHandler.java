@@ -11,8 +11,11 @@ import com.netty.imchat.common.util.PacketWriteUtil;
 import com.netty.imchat.constant.Constants;
 import com.netty.imchat.util.constant.Constant;
 import com.netty.imchat.util.constant.HttpStatus;
+import com.netty.imchat.util.digest.Base64Utils;
+import com.netty.imchat.util.digest.Md5Utils;
 import com.netty.imchat.util.digest.RSAUtils;
 import com.netty.imchat.util.exception.AppException;
+import com.netty.imchat.util.general.StringUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpResponseStatus;
@@ -21,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -51,7 +55,7 @@ public class LoginHandler extends AbstractServerCmdHandler {
 
             LoginRequestPacket loginPacket = (LoginRequestPacket) packet;
 
-            String loginInfo = MessageFormat.format("-----登录操作:user->{0}, ip->{1}----",
+            String loginInfo = MessageFormat.format("-----登录操作:user->{0}, password->{1}----",
                     loginPacket.getLoginCode(), loginPacket.getPassword());
 
             log.info(loginInfo);
@@ -83,7 +87,7 @@ public class LoginHandler extends AbstractServerCmdHandler {
      */
     private UserInfoVO doLogin(Map<String, String> loginInfoMap){
         if(null == loginInfoMap){
-            return null;
+            throw new AppException("用户信息为空");
         }
 
         if(!"admin".equals(loginInfoMap.get("loginCode"))){
@@ -103,16 +107,35 @@ public class LoginHandler extends AbstractServerCmdHandler {
      * @return
      */
     private Map<String, String> decryptLoginInfo(LoginRequestPacket packet){
-        Map<String, String> loginInfo = null;
+        Map<String, String> loginInfo = new HashMap<String, String>();
         try {
-            byte[] loginCodeBytes = RSAUtils.decryptByPublicKey(packet.getLoginCode().getBytes(), Constants.PRIVATE_KEY);
-            byte[] passwordBytes = RSAUtils.decryptByPublicKey(packet.getPassword().getBytes(), Constants.PRIVATE_KEY);
-            loginInfo.put("loginCode", new String(loginCodeBytes, Constants.ENCODING_UTF8));
+//            byte[] loginCodeBytes = RSAUtils.decryptByPublicKey(packet.getLoginCode().getBytes("UTF-8"), Constants.PRIVATE_KEY);
+            String password = packet.getPassword();
+            if(StringUtils.isEmpty(password) || StringUtils.isEmpty(packet.getLoginCode())){
+                return null;
+            }
+
+            //至少是32位
+            if(password.length() < 32){
+                System.out.println("-----传输数据长度小于32位，传输数据被篡改-----");
+                return null;
+            }
+            String passwdContent = password.substring(0, password.length()- 32);
+            String hash = password.substring(password.length()- 32);
+            if(!Md5Utils.hash(passwdContent).equals(hash)){
+                System.out.println("-----数据校验出错，传输数据被篡改-----");
+                return null;
+            }
+
+            byte[] passwordBytes = RSAUtils.decryptByPrivateKey(Base64Utils.decode(passwdContent), Constants.PRIVATE_KEY);
+            loginInfo.put("loginCode", packet.getLoginCode());
             loginInfo.put("password", new String(passwordBytes, Constants.ENCODING_UTF8));
+
+            return loginInfo;
         }catch (Exception e){
             log.info(e.getMessage());
         }
 
-        return loginInfo;
+        return null;
     }
 }

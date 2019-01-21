@@ -1,6 +1,7 @@
-package com.javafx.controller;
+package com.cache;
 
 import com.ClientUIMain;
+import com.controller.BaseController;
 
 import java.util.HashMap;
 import java.util.Map;
