@@ -1,6 +1,5 @@
 package com.netty.imchat.run;
 
-import com.netty.imchat.constant.Constants;
 import com.netty.imchat.util.digest.Base64Utils;
 import com.netty.imchat.util.digest.RSAUtils;
 

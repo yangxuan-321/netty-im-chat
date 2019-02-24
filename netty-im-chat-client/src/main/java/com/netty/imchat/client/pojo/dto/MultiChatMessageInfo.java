@@ -9,4 +9,5 @@ package com.netty.imchat.client.pojo.dto;
  * @Modifyed By :
  */
 public class MultiChatMessageInfo extends MessageInfo {
+
 }

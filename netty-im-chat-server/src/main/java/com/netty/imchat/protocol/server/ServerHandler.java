@@ -5,7 +5,7 @@ import com.netty.imchat.command.manager.ServerCmdHandlerManager;
 import com.netty.imchat.common.entity.packet.ConnectResponsePacket;
 import com.netty.imchat.common.entity.packet.Packet;
 import com.netty.imchat.common.util.PacketCodeUtil;
-import com.netty.imchat.constant.Constants;
+import com.netty.imchat.pojo.constant.Constants;
 import com.netty.imchat.util.digest.Md5Utils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

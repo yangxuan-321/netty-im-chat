@@ -1,4 +1,4 @@
-package com.netty.imchat.constant;
+package com.netty.imchat.pojo.constant;
 
 /**
  * @author Kevin
