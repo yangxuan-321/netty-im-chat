@@ -18,8 +18,9 @@ public class TestRSA {
         Map<String, Object> stringObjectMap = RSAUtils.genKeyPair();
         String publicKey = RSAUtils.getPublicKey(stringObjectMap);
         String privateKey = RSAUtils.getPrivateKey(stringObjectMap);
-        byte[] bytes = RSAUtils.encryptByPrivateKey(a.getBytes(), privateKey);
-        byte[] bytes1 = RSAUtils.decryptByPublicKey(bytes, publicKey);
+        System.out.println("公钥:"+publicKey + "\n" + "私钥:"+privateKey);
+        byte[] bytes = RSAUtils.encryptByPublicKey(a.getBytes(), publicKey);
+        byte[] bytes1 = RSAUtils.decryptByPrivateKey(bytes, privateKey);
         System.out.println(new String(bytes1, "UTF-8"));
     }
 }

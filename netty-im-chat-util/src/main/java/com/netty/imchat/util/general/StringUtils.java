@@ -25,4 +25,13 @@ public class StringUtils {
     public static final boolean isNotEmpty(String str) {
         return !isEmpty(str);
     }
+
+    /**
+     * 获得字符串长度
+     * @param str
+     * @return
+     */
+    public static final int strLen(String str){
+        return isEmpty(str) ? 0 : str.length();
+    }
 }

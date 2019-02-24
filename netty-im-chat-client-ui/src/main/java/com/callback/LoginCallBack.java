@@ -16,9 +16,6 @@ import javafx.application.Platform;
  * @date 2019/1/16 15:06
  */
 public class LoginCallBack implements CallBack {
-
-
-
     @Override
     public void oncall(Object... args) {
         //登录事情
@@ -30,25 +27,24 @@ public class LoginCallBack implements CallBack {
         }
 
         LoginResponsePacket packet = (LoginResponsePacket)args[0];
-//        if(packet.isSuccess()){//登陆成功 -- 关闭登录窗口 打开 消息窗口
-//            Platform.runLater(new Runnable() {
-//                @Override
-//                public void run() {
-//                    //更新JavaFX的主线程的代码放在此处
-//                    BaseUIInfo.application.gotoMessage();
-//                }
-//            });
-//        }else{//登录失败 -- 弹窗提醒
+        if(packet.isSuccess()){//登陆成功 -- 关闭登录窗口 打开 消息窗口
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    //更新JavaFX的主线程的代码放在此处
+                    BaseUIInfo.application.gotoMessage();
+                }
+            });
+        }else{//登录失败 -- 弹窗提醒
             //暂时先不做啥
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     //更新JavaFX的主线程的代码放在此处
                     BaseController controller = BaseUIInfo.CONTROLLER_LIST.get(LoginController.CONTROLLER_CODE);
-                    ((LoginController)controller).setLoginTips("123");
+                    ((LoginController)controller).setLoginTips(packet.getMessage());
                 }
             });
-//        }
-
+        }
     }
 }
