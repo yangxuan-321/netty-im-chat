@@ -1,5 +1,5 @@
 # 即时聊天 netty-im-chat<br>
-**即时通信im实战 主要 使用了 Netty**
+**即时通信im实战 主要 使用了 Netty  测试账号为: admin 密码为: 123**
 
  1. 以下是几个组件工程作用:<br>
     netty-test 学习测试使用netty的api项目<br>
