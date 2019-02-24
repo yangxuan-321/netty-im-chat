@@ -52,7 +52,7 @@ public class ConnectResponseHandler extends AbstractClientCmdHandler {
             throw new AppException("PK的摘要不对"); //PK的摘要不对
         }
 
-        //System.out.println("拿到pk");
+        //log.info("拿到pk");
         log.info("pk为:"+publicKey);
         clientInfo.setPublicKey(publicKey);
     }

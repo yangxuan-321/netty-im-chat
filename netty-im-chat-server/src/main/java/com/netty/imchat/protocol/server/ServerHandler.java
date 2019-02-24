@@ -10,6 +10,8 @@ import com.netty.imchat.util.digest.Md5Utils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
@@ -22,11 +24,13 @@ import java.net.InetSocketAddress;
  */
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 
+    private static final Logger log = LoggerFactory.getLogger(ServerHandler.class);
+
     //在连接后被调用
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         InetSocketAddress socketAddress = (InetSocketAddress)ctx.channel().remoteAddress();
-        System.out.println("--------客户端连接进来了:ip"+ socketAddress.getAddress() +"--------");
+        log.info("--------客户端连接进来了:ip"+ socketAddress.getAddress() +"--------");
 
         //返回给客户端一个公钥  --  其实整个过程还是有可能被 窃取 (例如公钥被调换，所以 https的证书很重要)
         //将返回给客户端的消息定义为

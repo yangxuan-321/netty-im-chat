@@ -6,6 +6,8 @@ import com.netty.imchat.common.entity.packet.Packet;
 import com.netty.imchat.common.enums.CommandEnum;
 import com.netty.imchat.util.exception.AppException;
 import io.netty.channel.ChannelHandlerContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
@@ -19,6 +21,8 @@ import java.text.MessageFormat;
  */
 @Component("com.netty.imchat.client.command.receive.handler.LoginResponseHandler")
 public class LoginResponseHandler extends AbstractClientCmdHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(LoginResponseHandler.class);
 
     public static CallBack callBack;
 
@@ -37,7 +41,7 @@ public class LoginResponseHandler extends AbstractClientCmdHandler {
         //如果登录不成功
         LoginResponsePacket loginRes = (LoginResponsePacket) packet;
         if(!loginRes.isSuccess()){//登录不成功
-            System.out.println(MessageFormat.format("-----登录不成功:{0}-----", loginRes.getMessage()));
+            log.info(MessageFormat.format("-----登录不成功:{0}-----", loginRes.getMessage()));
         }
 
         //登陆成功 -- 保存相关消息

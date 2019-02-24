@@ -1,5 +1,7 @@
 package com.netty.imchat.run;
 
+import com.netty.imchat.constant.Constants;
+import com.netty.imchat.util.digest.Base64Utils;
 import com.netty.imchat.util.digest.RSAUtils;
 
 import java.util.Map;
@@ -13,14 +15,17 @@ import java.util.Map;
  */
 public class TestRSA {
     public static void main(String[] args) throws Exception{
-        String a = "123";
+        String a = "55555";
 
         Map<String, Object> stringObjectMap = RSAUtils.genKeyPair();
         String publicKey = RSAUtils.getPublicKey(stringObjectMap);
         String privateKey = RSAUtils.getPrivateKey(stringObjectMap);
-        System.out.println("公钥:"+publicKey + "\n" + "私钥:"+privateKey);
-        byte[] bytes = RSAUtils.encryptByPublicKey(a.getBytes(), publicKey);
-        byte[] bytes1 = RSAUtils.decryptByPrivateKey(bytes, privateKey);
-        System.out.println(new String(bytes1, "UTF-8"));
+        System.out.println(publicKey);
+        System.out.println(privateKey);
+        String decode = Base64Utils.encode(a.getBytes());
+        byte[] jiami = RSAUtils.encryptByPublicKey(decode.getBytes(), publicKey);
+        byte[] jiemi = RSAUtils.decryptByPrivateKey(jiami, privateKey);
+        byte[] decode1 = Base64Utils.decode(new String(jiemi));
+        System.out.println(new String(decode1));
     }
 }

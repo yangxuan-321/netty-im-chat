@@ -1,5 +1,9 @@
 package com.study.nio;
 
+import com.study.bio.SocketIOServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.nio.ByteBuffer;
@@ -18,6 +22,8 @@ import java.util.Set;
  * @date 2018/9/27 11:37
  */
 public class NIOServer {
+
+    private static final Logger log = LoggerFactory.getLogger(NIOServer.class);
 
     //单位ms
     public static final int WAIT_TIME = 1;
@@ -60,7 +66,7 @@ public class NIOServer {
                     // 监测是否有新的连接，这里的1指的是阻塞的时间为1ms
                     // > 0 表示 有至少一个 选择器相关的事件
                     if(linkSelector.select(WAIT_TIME) > 0){
-                        System.out.println("有新连接");
+                        log.info("有新连接");
                         // 获取 选择器产生的事件
                         Set<SelectionKey> set = linkSelector.selectedKeys();
                         Iterator<SelectionKey> it = set.iterator();
@@ -103,7 +109,7 @@ public class NIOServer {
             try {
                 while (true){
                     if(messageSelector.select(WAIT_TIME) > 0){
-                        System.out.println("有新消息");
+                        log.info("有新消息");
                         Set<SelectionKey> keys = messageSelector.selectedKeys();
                         Iterator<SelectionKey> it = keys.iterator();
 
@@ -113,8 +119,8 @@ public class NIOServer {
                                 //读取数据
                                 try {
                                     String read = read(key);
-                                    System.out.println(read);
-                                    System.out.println("------------------");
+                                    log.info(read);
+                                    log.info("------------------");
                                     //回一句消息我收到了
                                     write(key, "hello world");
                                 }catch (Exception e){
@@ -161,6 +167,6 @@ public class NIOServer {
         while(byteBuffer.hasRemaining()){
             socketChannel.write(byteBuffer);
         }
-        System.out.println("回复消息:"+message);
+        log.info("回复消息:"+message);
     }
 }

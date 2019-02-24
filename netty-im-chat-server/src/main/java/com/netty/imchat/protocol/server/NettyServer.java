@@ -1,5 +1,6 @@
 package com.netty.imchat.protocol.server;
 
+import com.netty.imchat.common.splitpack.SplitPackageDecoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -41,6 +42,10 @@ public class NettyServer {
                 childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
+                        //可以简单把 pipeline 理解成责任链
+                        //1.服务端接受消息的拆包处理(解决粘包和半包)
+                        nioSocketChannel.pipeline().addLast(new SplitPackageDecoder());
+                        //2.服务端接受消息的逻辑处理
                         nioSocketChannel.pipeline().addLast(new ServerHandler());
                     }
                 });

@@ -1,10 +1,8 @@
-package com.javafx.controller;
+package com.controller;
 
-import com.ClientUIMain;
 import com.callback.LoginCallBack;
 import com.netty.imchat.client.command.receive.handler.LoginResponseHandler;
 import com.netty.imchat.client.command.send.CommandFacde;
-import com.netty.imchat.client.command.send.LoginRequestSend;
 import com.netty.imchat.util.general.StringUtils;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.event.ActionEvent;
@@ -12,13 +10,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 @FXMLController
 public class LoginController extends BaseController implements Initializable {
+
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     public static final String CONTROLLER_CODE = "LoginController";
 
@@ -45,21 +46,22 @@ public class LoginController extends BaseController implements Initializable {
         String loginNameStr = loginName.getText();
         String passwordStr = password.getText();
         if(StringUtils.isEmpty(loginNameStr)){
-            System.out.println("loginCode不能为空");
+            log.info("loginCode不能为空");
         }
 
         if(StringUtils.isEmpty(passwordStr)){
-            System.out.println("password不能为空");
+            log.info("password不能为空");
         }
         CommandFacde.LOGIN_REQUEST_SEND.login(loginNameStr, passwordStr);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        log.info("初始化");
     }
 
     public void setLoginTips(String tipsMessage){
-//        resultTips.setText(tipsMessage);
+        resultTips.setText(tipsMessage);
     }
+
 }
