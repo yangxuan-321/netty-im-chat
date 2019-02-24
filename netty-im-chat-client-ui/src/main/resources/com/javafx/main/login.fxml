@@ -25,6 +25,9 @@
             <font>
                 <Font name="Comic Sans MS Bold" size="24.0" />
             </font></Label>
-        <Label fx:id="resultTips" layoutX="143.0" layoutY="211.0" prefHeight="20.0" prefWidth="243.0" textFill="RED" />
+        <Label fx:id="resultTips" layoutX="203.0" layoutY="211.0" prefHeight="23.0" prefWidth="158.0" textFill="RED">
+         <font>
+            <Font name="Courier New Bold" size="18.0" />
+         </font></Label>
     </children>
 </Pane>
