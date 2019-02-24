@@ -1,12 +1,12 @@
 package com.controller;
 
 import com.netty.imchat.client.command.send.CommandFacde;
+import com.netty.imchat.client.pojo.dto.SingChatMessageInfo;
 import de.felixroske.jfxsupport.FXMLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,7 +38,10 @@ public class MessageController extends BaseController implements Initializable {
     @FXML
     protected void sendMessage(ActionEvent event){
         String text = messageContent.getText();
-        CommandFacde.MESSAGE_REQUEST_SEND.sendMessage(text);
+        SingChatMessageInfo messageInfo = new SingChatMessageInfo();
+        messageInfo.setMessageContent(text);
+        messageInfo.setUserId(123);
+        CommandFacde.MESSAGE_REQUEST_SEND.sendSingChatMessage(messageInfo);
     }
 
 }

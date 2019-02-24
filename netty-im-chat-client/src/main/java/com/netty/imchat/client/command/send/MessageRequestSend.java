@@ -1,12 +1,14 @@
 package com.netty.imchat.client.command.send;
 
 import com.netty.imchat.client.BaseClientInfo;
+import com.netty.imchat.client.pojo.dto.SingChatMessageInfo;
 import com.netty.imchat.common.entity.packet.LoginRequestPacket;
 import com.netty.imchat.common.entity.packet.SingChatMessRequestPacket;
 import com.netty.imchat.util.digest.Base64Utils;
 import com.netty.imchat.util.digest.Md5Utils;
 import com.netty.imchat.util.digest.RSAUtils;
 import com.netty.imchat.util.exception.AppException;
+import com.sun.nio.sctp.MessageInfo;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -30,11 +32,11 @@ public class MessageRequestSend {
     @Resource(name="com.netty.imchat.client.command.send.BaseSend")
     private Send send;
 
-    public void sendMessage(String message) {
+    public void sendSingChatMessage(SingChatMessageInfo message) {
         try {
             SingChatMessRequestPacket packet = new SingChatMessRequestPacket();
-            packet.setUserId(123);
-            packet.setMessContent(message+"我爱北京天安门");
+            packet.setUserId(message.getUserId());
+            packet.setMessContent(message.getMessageContent());
             send.send(packet);
 
             //因为在那边会进行对象的序列化，如果出现了 粘包和半包的问题。将会发生异常

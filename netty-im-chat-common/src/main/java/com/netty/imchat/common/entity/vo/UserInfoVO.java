@@ -49,6 +49,14 @@ public class UserInfoVO {
         this.nickName = nickName;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public UserInfoVO(String loginCode, String userName, String nickName) {
         this.loginCode = loginCode;
         this.userName = userName;
