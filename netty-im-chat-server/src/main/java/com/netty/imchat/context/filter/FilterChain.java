@@ -1,4 +1,4 @@
-package com.netty.imchat.filter;
+package com.netty.imchat.context.filter;
 
 /**
  * @author : Kevin

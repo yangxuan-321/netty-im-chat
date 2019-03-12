@@ -1,6 +1,4 @@
-package com.netty.imchat.filter;
-
-import java.io.IOException;
+package com.netty.imchat.context.filter;
 
 /**
  * @author : Kevin
