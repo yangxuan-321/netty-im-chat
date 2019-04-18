@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context>
+    <filter>
+        <display-name>LoginFilter</display-name>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.netty.imchat.servicefilter.LoginFilter</filter-class>
+        <!--    <init-param>
+                <param-name>EncodeCoding</param-name>
+                <param-value>UTF-8</param-value>
+            </init-param>-->
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+</context>
