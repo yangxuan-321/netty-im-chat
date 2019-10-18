@@ -45,36 +45,28 @@ public class LoginHandler extends AbstractServerCmdHandler {
     protected void executeCust(ChannelHandlerContext ctx, Object msg, Packet packet) {
         UserInfoVO userInfoVO = null;
         LoginResponsePacket responsePacket = new LoginResponsePacket();
-        try {
-            if(!(packet instanceof LoginRequestPacket)){
-                throw new AppException("包结构不能被处理"); //不能处理
-            }
 
-            LoginRequestPacket loginPacket = (LoginRequestPacket) packet;
-
-            String loginInfo = MessageFormat.format("-----登录操作:user->{0}, ip->{1}----",
-                    loginPacket.getLoginCode(), loginPacket.getPassword());
-
-            log.info(loginInfo);
-
-            //1.解密出用户和密码
-            Map<String, String> loginInfoMap = decryptLoginInfo(loginPacket);
-
-            //2.做登录
-            userInfoVO = doLogin(loginInfoMap);
-            responsePacket.setUserInfoVO(userInfoVO);
-            responsePacket.setCode(HttpStatus.SC_OK);
-
-            //3.标记此Channel登陆成功
-            LoginUtil.markAsLogin(ctx.channel());
-        }catch (Exception e){
-            responsePacket.setCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-            if(e instanceof AppException){
-                responsePacket.setMessage(e.getMessage());
-            }else{
-                responsePacket.setMessage("未知错误");
-            }
+        if(!(packet instanceof LoginRequestPacket)){
+            throw new AppException("包结构不能被处理"); //不能处理
         }
+
+        LoginRequestPacket loginPacket = (LoginRequestPacket) packet;
+
+        String loginInfo = MessageFormat.format("-----登录操作:user->{0}, ip->{1}----",
+                loginPacket.getLoginCode(), loginPacket.getPassword());
+
+        log.info(loginInfo);
+
+        //1.解密出用户和密码
+        Map<String, String> loginInfoMap = decryptLoginInfo(loginPacket);
+
+        //2.做登录
+        userInfoVO = doLogin(loginInfoMap);
+        responsePacket.setUserInfoVO(userInfoVO);
+        responsePacket.setCode(HttpStatus.SC_OK);
+
+        //3.标记此Channel登陆成功
+        LoginUtil.markAsLogin(ctx.channel());
 
         //3.将响应信息回写 客户端
         PacketWriteUtil.writeRes(responsePacket, ctx);

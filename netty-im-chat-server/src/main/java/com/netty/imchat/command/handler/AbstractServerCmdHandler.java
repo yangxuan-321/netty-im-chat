@@ -2,6 +2,8 @@ package com.netty.imchat.command.handler;
 
 import com.netty.imchat.command.manager.ServerCmdHandlerManager;
 import com.netty.imchat.common.entity.packet.Packet;
+import com.netty.imchat.util.constant.HttpStatus;
+import com.netty.imchat.util.exception.AppException;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -30,7 +32,16 @@ public abstract class AbstractServerCmdHandler {
         before();
 
         //2.主要逻辑
-        executeCust(ctx, msg, packet);
+        try {
+            executeCust(ctx, msg, packet);
+        }catch (Exception e){
+            packet.setCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            if(e instanceof AppException){
+                packet.setMessage(e.getMessage());
+            }else{
+                packet.setMessage("未知错误");
+            }
+        }
 
         //3.after
         after();

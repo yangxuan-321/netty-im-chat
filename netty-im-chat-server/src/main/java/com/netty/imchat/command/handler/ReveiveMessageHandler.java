@@ -33,24 +33,15 @@ public class ReveiveMessageHandler extends AbstractServerCmdHandler {
     protected void executeCust(ChannelHandlerContext ctx, Object msg, Packet packet) {
         UserInfoVO userInfoVO = null;
         LoginResponsePacket responsePacket = new LoginResponsePacket();
-        try {
-            if(!(packet instanceof SingChatMessRequestPacket)){
-                throw new AppException("包结构不能被处理"); //不能处理
-            }
-
-            SingChatMessRequestPacket messRequestPacket = (SingChatMessRequestPacket) packet;
-
-
-            log.info(messRequestPacket.getMessContent());
-
-        }catch (Exception e){
-            responsePacket.setCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-            if(e instanceof AppException){
-                responsePacket.setMessage(e.getMessage());
-            }else{
-                responsePacket.setMessage("未知错误");
-            }
+        if(!(packet instanceof SingChatMessRequestPacket)){
+            throw new AppException("包结构不能被处理"); //不能处理
         }
+
+        SingChatMessRequestPacket messRequestPacket = (SingChatMessRequestPacket) packet;
+
+
+        log.info(messRequestPacket.getMessContent());
+
 
         //2.将响应信息回写 客户端
         //PacketWriteUtil.writeRes(responsePacket, ctx);
