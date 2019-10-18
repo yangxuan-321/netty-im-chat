@@ -11,6 +11,7 @@ import com.netty.imchat.util.digest.Base64Utils;
 import com.netty.imchat.util.digest.Md5Utils;
 import com.netty.imchat.util.digest.RSAUtils;
 import com.netty.imchat.util.exception.AppException;
+import com.netty.imchat.util.general.StringUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.stereotype.Component;
@@ -39,6 +40,10 @@ public class LoginRequestSend {
     public void login(String loginCode, String password) {
         try {
             LoginRequestPacket packet = new LoginRequestPacket();
+            if (StringUtils.isEmpty(clientInfo.getPublicKey())){
+                // 私钥还没准备好
+                return;
+            }
             byte[] passwd = RSAUtils.encryptByPublicKey(password.getBytes(), clientInfo.getPublicKey());
             String encode = Base64Utils.encode(passwd);
             String hash = Md5Utils.hash(encode);

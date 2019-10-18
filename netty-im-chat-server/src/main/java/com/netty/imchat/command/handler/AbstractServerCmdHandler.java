@@ -32,16 +32,7 @@ public abstract class AbstractServerCmdHandler {
         before();
 
         //2.主要逻辑
-        try {
-            executeCust(ctx, msg, packet);
-        }catch (Exception e){
-            packet.setCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-            if(e instanceof AppException){
-                packet.setMessage(e.getMessage());
-            }else{
-                packet.setMessage("未知错误");
-            }
-        }
+        executeCust(ctx, msg, packet);
 
         //3.after
         after();

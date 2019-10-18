@@ -61,15 +61,29 @@ public class LoginHandler extends AbstractServerCmdHandler {
         Map<String, String> loginInfoMap = decryptLoginInfo(loginPacket);
 
         //2.做登录
-        userInfoVO = doLogin(loginInfoMap);
-        responsePacket.setUserInfoVO(userInfoVO);
-        responsePacket.setCode(HttpStatus.SC_OK);
+        try {
+            userInfoVO = doLogin(loginInfoMap);
+            responsePacket.setUserInfoVO(userInfoVO);
+            responsePacket.setCode(HttpStatus.SC_OK);
+        }catch (Exception e){
+            responsePacket.setCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            if(e instanceof AppException){
+                responsePacket.setMessage(e.getMessage());
+            }else{
+                responsePacket.setMessage("未知错误");
+            }
+        }
 
         //3.标记此Channel登陆成功
         LoginUtil.markAsLogin(ctx.channel());
 
         //3.将响应信息回写 客户端
         PacketWriteUtil.writeRes(responsePacket, ctx);
+    }
+
+    @Override
+    protected void after() {
+        super.after();
     }
 
     /**
@@ -79,7 +93,7 @@ public class LoginHandler extends AbstractServerCmdHandler {
      */
     private UserInfoVO doLogin(Map<String, String> loginInfoMap){
         if(null == loginInfoMap){
-            return null;
+            throw new AppException("用户不存在");
         }
 
         if(!"admin".equals(loginInfoMap.get("loginCode"))){
@@ -104,19 +118,20 @@ public class LoginHandler extends AbstractServerCmdHandler {
 //            byte[] loginCodeBytes = RSAUtils.decryptByPublicKey(packet.getLoginCode().getBytes("UTF-8"), Constants.PRIVATE_KEY);
             String password = packet.getPassword();
             if(StringUtils.isEmpty(password) || StringUtils.isEmpty(packet.getLoginCode())){
-                return null;
+                log.info("用户名或者密码为空");
+                throw new AppException("用户名或者密码为空");
             }
 
             //至少是32位
             if(password.length() < 32){
                 log.info("-----传输数据长度小于32位，传输数据被篡改-----");
-                return null;
+                throw new AppException("传输数据被篡改");
             }
             String passwdContent = password.substring(0, password.length()- Constant.MD5_LENGTH);
             String hash = password.substring(password.length()- Constant.MD5_LENGTH);
             if(!Md5Utils.hash(passwdContent).equals(hash)){
                 log.info("-----数据校验出错，传输数据被篡改-----");
-                return null;
+                throw new AppException("传输数据被篡改");
             }
 
             byte[] passwordBytes = RSAUtils.decryptByPrivateKey(Base64Utils.decode(passwdContent), Constants.PRIVATE_KEY);
