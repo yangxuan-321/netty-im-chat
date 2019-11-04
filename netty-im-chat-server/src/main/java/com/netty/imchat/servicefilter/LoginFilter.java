@@ -1,9 +1,9 @@
 package com.netty.imchat.servicefilter;
 
 import com.netty.imchat.common.entity.packet.Packet;
-import com.netty.imchat.context.filter.Filter;
-import com.netty.imchat.context.filter.FilterChain;
-import com.netty.imchat.context.filter.FilterConfig;
+import com.startup.filter.Filter;
+import com.startup.filter.FilterChain;
+import com.startup.filter.FilterConfig;
 
 /**
  * @author Kevin
