@@ -16,9 +16,11 @@
  */
 
 
-package com.netty.imchat.context.listener;
+package com.startup.context.listener_good;
 
 
+
+import com.startup.context.subject.Lifecycle;
 
 import java.util.EventObject;
 
@@ -33,8 +35,6 @@ public final class LifecycleEvent extends EventObject {
     private static final long serialVersionUID = 1L;
 
 
-    // ----------------------------------------------------------- Constructors
-
     /**
      * Construct a new LifecycleEvent with the specified parameters.
      *
@@ -43,7 +43,6 @@ public final class LifecycleEvent extends EventObject {
      * @param data Event data (if any)
      */
     public LifecycleEvent(Lifecycle lifecycle, String type, Object data) {
-
         super(lifecycle);
         this.type = type;
         this.data = data;
@@ -72,9 +71,7 @@ public final class LifecycleEvent extends EventObject {
      * Return the event data of this event.
      */
     public Object getData() {
-
         return (this.data);
-
     }
 
 
@@ -82,9 +79,7 @@ public final class LifecycleEvent extends EventObject {
      * Return the Lifecycle on which this event occurred.
      */
     public Lifecycle getLifecycle() {
-
         return (Lifecycle) getSource();
-
     }
 
 
@@ -92,9 +87,7 @@ public final class LifecycleEvent extends EventObject {
      * Return the event type of this event.
      */
     public String getType() {
-
         return (this.type);
-
     }
 
 

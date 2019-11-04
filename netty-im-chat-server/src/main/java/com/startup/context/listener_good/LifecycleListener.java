@@ -1,10 +1,13 @@
-package com.netty.imchat.context.listener;
+package com.startup.context.listener_good;
 
 /**
  * @author : Kevin
  * @Title : LifecycleListener
  * @ProjectName netty-im-chat
  * @Description : TODO 一.事件机制基本概念
+ *
+ *      LifecycleListener 是观察者
+ *   监听特定事件。并做出对应处理
  *
  *   java中的事件机制的参与者有3种角色：
  *
