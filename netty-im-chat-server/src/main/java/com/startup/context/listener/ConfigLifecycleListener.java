@@ -18,9 +18,19 @@ package com.startup.context.listener;
 
 import com.startup.context.annotation.Listener;
 import com.startup.context.subject.Lifecycle;
+import com.sun.org.apache.xml.internal.resolver.readers.SAXParserHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * 读取配置文件的生命周期的具体监听器
@@ -51,6 +61,8 @@ public class ConfigLifecycleListener implements LifecycleListener {
         } else if (event.getType().equals(Lifecycle.CONFIG)) {
             //初始化配置
             initConfig();
+            //只初始化一次 -- 移除观察者
+            event.getLifecycle().removeLifecycleListener(this);
         } else if (event.getType().equals(Lifecycle.STOP_EVENT)) {
             //TODO
         } else {
@@ -63,14 +75,64 @@ public class ConfigLifecycleListener implements LifecycleListener {
     private void initConfig() {
     }
 
+    private void parseConfigXml(){
+        //1、获取一个SAXParserFactory的实例
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        try {
+            //2、通过factory获取SAXParser的实例
+            SAXParser parser = factory.newSAXParser();
+            //3、创建SAXParserHandler对象
+            SAXParserHandler handler = new SAXParserHandler();
+            parser.parse("book.xml", handler);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+        }
+    }
 
     protected InputSource getContextSource() {
         //TODO
-        return null;
+        return new FileInputStream();
     }
 
 //    protected void parseContextXml(InputSource source, ContextXml dest) {
 //
 //    }
 
+    class ConfigXmlParserHandler extends DefaultHandler {
+        /**
+         * 用来遍历xml文件的开始标签
+         */
+        @Override
+        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+            // TODO Auto-generated method stub
+            super.startElement(uri, localName, qName, attributes);
+        }
+        /**
+         * 用来遍历xml文件的结束标签
+         */
+        @Override
+        public void endElement(String uri, String localName, String qName) throws SAXException {
+            // TODO Auto-generated method stub
+            super.endElement(uri, localName, qName);
+        }
+        /**
+         * 用来表示解析开始
+         */
+        @Override
+        public void startDocument() throws SAXException {
+            // TODO Auto-generated method stub
+            super.startDocument();
+            System.out.println("SAX解析开始");
+        }
+        /**
+         * 用来表示解析结束
+         */
+        @Override
+        public void endDocument() throws SAXException {
+            // TODO Auto-generated method stub
+            super.endDocument();
+            System.out.println("SAX解析结束");
+        }
+    }
 }
+
