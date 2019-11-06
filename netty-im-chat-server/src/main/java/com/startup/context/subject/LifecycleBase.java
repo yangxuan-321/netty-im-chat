@@ -17,13 +17,16 @@
 
 package com.startup.context.subject;
 
-import com.startup.context.listener.*;
-import com.startup.context.listener_good.LifecycleListener;
-import com.startup.context.listener_good.LifecycleSupport;
+import com.startup.context.annotation.Listener;
+import com.startup.context.listener.LifecycleException;
+import com.startup.context.listener.LifecycleListener;
+import com.startup.context.listener.LifecycleState;
+import com.startup.context.listener.LifecycleSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -36,8 +39,37 @@ public abstract class LifecycleBase implements Lifecycle {
 
     private LifecycleSupport lifecycle = new LifecycleSupport(this);
 
+    private static Map<String, List<LifecycleListener>> subjectMap = new HashMap<String, List<LifecycleListener>>();
+
+    static {
+        ServiceLoader<LifecycleListener> loader = ServiceLoader.load(LifecycleListener.class);
+        Iterator<LifecycleListener> iterator = loader.iterator();
+        while (iterator.hasNext()){
+            LifecycleListener listener = iterator.next();
+            Listener annotation = listener.getClass().getAnnotation(Listener.class);
+            if (null == annotation){
+                continue;
+            }
+            String subject = annotation.subject();
+            if (!subjectMap.containsKey(subject)){
+                List<LifecycleListener> lifecycleListeners = new ArrayList<LifecycleListener>();
+                Class<? extends LifecycleListener> aClass = listener.getClass();
+                aClass.newInstance()
+                lifecycleListeners.add();
+                subjectMap.put(subject, );
+            }
+        }
+    }
+
     // 初始化为 新建 状态
     private volatile LifecycleState state = LifecycleState.NEW;
+
+    public LifecycleBase(){
+        if (CollectionUtils.isEmpty(subjectMap)){
+            return;
+        }
+        lifecycle.addLifecycleListeners(subjectMap.get(subjectName()));
+    }
 
     @Override
     public void addLifecycleListener(LifecycleListener listener) {
@@ -158,4 +190,5 @@ public abstract class LifecycleBase implements Lifecycle {
         }
     }
 
+    protected abstract String subjectName();
 }

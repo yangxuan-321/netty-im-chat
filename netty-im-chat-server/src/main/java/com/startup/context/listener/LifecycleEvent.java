@@ -16,7 +16,7 @@
  */
 
 
-package com.startup.context.listener_good;
+package com.startup.context.listener;
 
 
 
@@ -26,22 +26,14 @@ import java.util.EventObject;
 
 
 /**
- *
  * LifecycleEvent类表示生命周期中的某个事件
- *
+ * 生命周期事件，对主题与发生的事件进行封装。
  */
 public final class LifecycleEvent extends EventObject {
 
     private static final long serialVersionUID = 1L;
 
 
-    /**
-     * Construct a new LifecycleEvent with the specified parameters.
-     *
-     * @param lifecycle Component on which this event occurred
-     * @param type type即为各状态init、start。。。
-     * @param data Event data (if any)
-     */
     public LifecycleEvent(Lifecycle lifecycle, String type, Object data) {
         super(lifecycle);
         this.type = type;
@@ -63,8 +55,6 @@ public final class LifecycleEvent extends EventObject {
      */
     private String type = null;
 
-
-    // ------------------------------------------------------------- Properties
 
 
     /**

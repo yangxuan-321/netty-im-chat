@@ -1,6 +1,7 @@
 package com.netty.imchat.servicefilter;
 
 import com.netty.imchat.common.entity.packet.Packet;
+import com.netty.imchat.common.enums.CommandEnum;
 import com.startup.filter.Filter;
 import com.startup.filter.FilterChain;
 import com.startup.filter.FilterConfig;
@@ -20,7 +21,9 @@ public class LoginFilter implements Filter<Packet> {
 
     @Override
     public void doFilter(Packet packet, FilterChain filterChain) {
-
+        if (packet.getCommand() == CommandEnum.LOGIN_REQUEST.getCode()){
+            filterChain.doFilter(packet);
+        }
     }
 
     @Override

@@ -16,7 +16,7 @@
  */
 
 
-package com.startup.context.listener_good;
+package com.startup.context.listener;
 
 import com.startup.context.subject.Lifecycle;
 
@@ -58,6 +58,13 @@ public final class LifecycleSupport {
     public void addLifecycleListener(LifecycleListener listener) {
         synchronized (listenersLock) {
             listeners.add(listener);
+        }
+
+    }
+
+    public void addLifecycleListeners(List<LifecycleListener> listeners) {
+        synchronized (listenersLock) {
+            listeners.addAll(listeners);
         }
 
     }

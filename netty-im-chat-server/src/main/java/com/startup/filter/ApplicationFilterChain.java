@@ -19,7 +19,6 @@
 package com.startup.filter;
 
 
-import com.startup.context.constant.Constants;
 import org.apache.catalina.Globals;
 import org.apache.catalina.InstanceEvent;
 import org.apache.catalina.comet.CometEvent;
