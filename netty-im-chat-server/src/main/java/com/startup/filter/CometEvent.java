@@ -141,6 +141,6 @@ public interface CometEvent {
      *         of the invocation.
      */
     public void setTimeout(int timeout)
-        throws IOException, ServletException, UnsupportedOperationException;
+        throws IOException, UnsupportedOperationException;
 
 }
