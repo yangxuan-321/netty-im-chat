@@ -17,6 +17,7 @@
 package com.startup.context.listener;
 
 import com.startup.context.annotation.Listener;
+import com.startup.context.pojo.FilterDescribe;
 import com.startup.context.subject.Lifecycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import java.awt.print.Book;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 读取配置文件的生命周期的具体监听器
@@ -98,13 +103,9 @@ public class ConfigLifecycleListener implements LifecycleListener {
     public class SAXParserHandler extends DefaultHandler {
         int bookindex = 1;
         //定义全局变量是为了使book对象和value值可以被多个方法访问
-        Book book = null;
+        FilterDescribe filterDescribe = null;
         String value = null;
-        private ArrayList<Book> bookList = new ArrayList<>();
 
-        public ArrayList<Book> getBookList() {
-            return bookList;
-        }
 
         /**
          * 用来遍历xml文件的开始标签
@@ -115,23 +116,11 @@ public class ConfigLifecycleListener implements LifecycleListener {
             //调用DefaultHandler类的startElement方法
             super.startElement(uri, localName, qName, attributes);
             //开始解析book元素的属性
-            if (qName.equals("book")) {
-                //每一次遇到book就建立新的book对象
-                book = new Book();
-                System.out.println("------------现在开始遍历第" + bookindex + "本书---------");
-                //已知book元素下属性的名称，根据名称获取属性值
-                String value = attributes.getValue("id");
-                System.out.println("book的属性值是：" + value);
-                //不知道book元素下属性的名称以及个数，如何获取元素名称及属性
-                int num = attributes.getLength();
-                for (int i = 0; i < num; i++) {
-                    System.out.print("第" + (i + 1) + "个book元素的属性名是" + attributes.getQName(i));
-                    System.out.println("----book元素的属性值是" + attributes.getValue(i));
-                    if (attributes.getQName(i) == "id") {
-                        book.setId(attributes.getValue(i));
-                    }
+            if (qName.equals("filter")) {
+                for (FilterDescribe fd: ContextConfigManager.filters){
+                    if (fd.getFilterName())
                 }
-            } else if (!qName.equals("book") && !qName.equals("bookstore")) {
+            } else if (qName.equals("filter-mapping")) {
                 System.out.print("节点名是" + qName);
             }
         }
@@ -187,13 +176,11 @@ public class ConfigLifecycleListener implements LifecycleListener {
         /**
          * 用来求得节点值
          */
-
         @Override
         public void characters(char[] ch, int start, int length) throws SAXException {
             super.characters(ch, start, length);
             value = new String(ch, start, length);
-            if (!value.trim().equals(""))
-                System.out.println("节点值为" + value);
+            if ("display-name".equals())
         }
     }
 }
