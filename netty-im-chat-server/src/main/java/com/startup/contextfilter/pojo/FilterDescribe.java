@@ -1,4 +1,4 @@
-package com.startup.context.pojo;
+package com.startup.contextfilter.pojo;
 
 /**
  * @author : Kevin

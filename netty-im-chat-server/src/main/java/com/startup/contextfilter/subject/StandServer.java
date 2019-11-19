@@ -1,8 +1,7 @@
-package com.startup.context.subject;
+package com.startup.contextfilter.subject;
 
-import com.startup.context.listener.LifecycleException;
-import com.startup.context.listener.LifecycleState;
-import org.springframework.stereotype.Component;
+import com.startup.contextfilter.listener.LifecycleException;
+import com.startup.contextfilter.listener.LifecycleState;
 
 /**
  * @author : Kevin

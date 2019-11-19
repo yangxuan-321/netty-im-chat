@@ -16,7 +16,7 @@
  */
 
 
-package com.startup.context.constant;
+package com.startup.contextfilter.constant;
 
 
 /**
@@ -30,6 +30,6 @@ package com.startup.context.constant;
  */
 public final class Constants {
 
-    public static final String DefaultContextXml = "/context/context.xml";
+    public static final String DefaultContextXml = "/context/context-filter.xml";
 
 }

@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.startup.context.subject;
+package com.startup.contextfilter.subject;
 
 
-import com.startup.context.listener.LifecycleException;
-import com.startup.context.listener.LifecycleState;
-import com.startup.context.listener.LifecycleListener;
+import com.startup.contextfilter.listener.LifecycleException;
+import com.startup.contextfilter.listener.LifecycleState;
+import com.startup.contextfilter.listener.LifecycleListener;
 
 import java.util.List;
 

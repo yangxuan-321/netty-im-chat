@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<context>
+<context-filters>
     <filter>
         <display-name>LoginFilter</display-name>
         <filter-name>LoginFilter</filter-name>
         <filter-class>com.netty.imchat.servicefilter.LoginFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>LoginFilter</filter-name>
         <url-pattern>*</url-pattern>
-    </filter-mapping>
-</context>
+    </filter>
+</context-filters>
