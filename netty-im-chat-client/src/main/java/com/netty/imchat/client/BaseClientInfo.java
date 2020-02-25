@@ -1,9 +1,6 @@
 package com.netty.imchat.client;
 
-import com.netty.imchat.client.command.receive.handler.ConnectResponseHandler;
 import com.netty.imchat.common.entity.vo.UserInfoVO;
-import com.netty.imchat.util.exception.AppException;
-import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 
 /**

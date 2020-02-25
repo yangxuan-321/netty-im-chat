@@ -1,19 +1,12 @@
 package com.netty.imchat.client.command.send;
 
 import com.netty.imchat.client.BaseClientInfo;
-import com.netty.imchat.common.entity.packet.ConnectResponsePacket;
 import com.netty.imchat.common.entity.packet.LoginRequestPacket;
-import com.netty.imchat.common.entity.packet.Packet;
-import com.netty.imchat.common.enums.CommandEnum;
-import com.netty.imchat.common.util.PacketCodeUtil;
-import com.netty.imchat.util.constant.Constant;
 import com.netty.imchat.util.digest.Base64Utils;
 import com.netty.imchat.util.digest.Md5Utils;
 import com.netty.imchat.util.digest.RSAUtils;
 import com.netty.imchat.util.exception.AppException;
 import com.netty.imchat.util.general.StringUtils;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
