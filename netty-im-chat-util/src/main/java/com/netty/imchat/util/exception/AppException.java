@@ -8,17 +8,17 @@ package com.netty.imchat.util.exception;
  * @date 2018/9/29 20:35
  */
 public class AppException extends RuntimeException{
-    private String code;
+    private int code;
 
     private String message;
 
     private Throwable throwable;
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
@@ -46,7 +46,7 @@ public class AppException extends RuntimeException{
         this.message = message;
     }
 
-    public AppException(String code, String message){
+    public AppException(int code, String message){
         this.code = code;
         this.message = message;
     }

@@ -47,7 +47,7 @@ public class LoginCallBack implements CallBack {
                 public void run() {
                     //更新JavaFX的主线程的代码放在此处
                     BaseController controller = BaseUIInfo.CONTROLLER_LIST.get(LoginController.CONTROLLER_CODE);
-                    ((LoginController)controller).setLoginTips(packet.getMessage());
+                    ((LoginController)controller).setLoginTips(packet);
                 }
             });
         }
