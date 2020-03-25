@@ -13,6 +13,8 @@ public enum CommandEnum {
     LOGIN_REQUEST((byte)1, LoginRequestPacket.class),           //登录请求
     CONNECT_RESPONSE((byte)2, ConnectResponsePacket.class),     //连接响应
     LOGIN_RESPONSE((byte)3, LoginResponsePacket.class),         //登录响应
+    REGISTER_REQUEST((byte)4, RegisterRequestPacket.class),
+    REGISTER_REPONSE((byte)5, RegisterResponsePacket.class),
     SING_CHAT_MESS_REQEST((byte)6, SingChatMessRequestPacket.class),//单聊请求
     MULTI_CHAT_MESS_REQEST((byte)8, MultiChatMessRequestPacket.class),//群聊请求
     COMMON((byte)0xff, CommonPacket.class);                     //普通命令（通用）
