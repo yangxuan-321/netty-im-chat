@@ -2,7 +2,6 @@ package com.controller;
 
 import com.callback.LoginCallBack;
 import com.netty.imchat.client.command.receive.handler.LoginResponseHandler;
-import com.netty.imchat.client.command.send.CommandFacde;
 import com.netty.imchat.util.general.StringUtils;
 import com.route.node.NodeRouter;
 import de.felixroske.jfxsupport.FXMLController;
@@ -12,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
