@@ -15,5 +15,14 @@
         <module name="netty-test" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="8" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="netty-im-chat-client" options="-parameters" />
+      <module name="netty-im-chat-common" options="-parameters" />
+      <module name="netty-im-chat-server" options="-parameters" />
+      <module name="netty-test" options="-parameters" />
+    </option>
   </component>
 </project>
