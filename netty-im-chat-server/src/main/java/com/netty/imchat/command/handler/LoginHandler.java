@@ -6,6 +6,7 @@ import com.netty.imchat.common.entity.packet.Packet;
 import com.netty.imchat.common.entity.vo.UserInfoVO;
 import com.netty.imchat.common.enums.CommandEnum;
 import com.netty.imchat.common.util.PacketWriteUtil;
+import com.netty.imchat.common.enums.LoginResponseEnum;
 import com.netty.imchat.pojo.constant.Constants;
 import com.netty.imchat.util.constant.Constant;
 import com.netty.imchat.util.constant.HttpStatus;
@@ -47,7 +48,7 @@ public class LoginHandler extends AbstractServerCmdHandler {
         LoginResponsePacket responsePacket = new LoginResponsePacket();
 
         if(!(packet instanceof LoginRequestPacket)){
-            throw new AppException("包结构不能被处理"); //不能处理
+            throw new AppException(LoginResponseEnum.NONE.ordinal(), "包结构不能被处理"); //不能处理
         }
 
         LoginRequestPacket loginPacket = (LoginRequestPacket) packet;
@@ -66,9 +67,10 @@ public class LoginHandler extends AbstractServerCmdHandler {
             responsePacket.setUserInfoVO(userInfoVO);
             responsePacket.setCode(HttpStatus.SC_OK);
         }catch (Exception e){
-            responsePacket.setCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            responsePacket.setCode(LoginResponseEnum.NONE.ordinal());
             if(e instanceof AppException){
                 responsePacket.setMessage(e.getMessage());
+                responsePacket.setCode(((AppException) e).getCode());
             }else{
                 responsePacket.setMessage("未知错误");
             }
@@ -93,15 +95,15 @@ public class LoginHandler extends AbstractServerCmdHandler {
      */
     private UserInfoVO doLogin(Map<String, String> loginInfoMap){
         if(null == loginInfoMap){
-            throw new AppException("用户不存在");
+            throw new AppException(LoginResponseEnum.NONE.ordinal(),"用户不存在");
         }
 
         if(!"admin".equals(loginInfoMap.get("loginCode"))){
-            throw new AppException("用户不存在");
+            throw new AppException(LoginResponseEnum.USER_NOT_EXISTS.ordinal(), "用户不存在");
         }
 
         if(!"123".equals(loginInfoMap.get("password"))){
-            throw new AppException("密码不正确");
+            throw new AppException(LoginResponseEnum.PASSWD_ERROR.ordinal(), "密码不正确");
         }
 
         return new UserInfoVO(loginInfoMap.get("loginCode"), loginInfoMap.get("password"), "青萍剑客");

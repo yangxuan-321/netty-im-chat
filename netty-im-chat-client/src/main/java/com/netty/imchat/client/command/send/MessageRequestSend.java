@@ -2,13 +2,8 @@ package com.netty.imchat.client.command.send;
 
 import com.netty.imchat.client.BaseClientInfo;
 import com.netty.imchat.client.pojo.dto.SingChatMessageInfo;
-import com.netty.imchat.common.entity.packet.LoginRequestPacket;
 import com.netty.imchat.common.entity.packet.SingChatMessRequestPacket;
-import com.netty.imchat.util.digest.Base64Utils;
-import com.netty.imchat.util.digest.Md5Utils;
-import com.netty.imchat.util.digest.RSAUtils;
 import com.netty.imchat.util.exception.AppException;
-import com.sun.nio.sctp.MessageInfo;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

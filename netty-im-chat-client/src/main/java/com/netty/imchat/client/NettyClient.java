@@ -1,6 +1,5 @@
 package com.netty.imchat.client;
 
-import com.netty.imchat.client.command.receive.handler.LoginResponseHandler;
 import com.netty.imchat.common.splitpack.SplitPackageDecoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;

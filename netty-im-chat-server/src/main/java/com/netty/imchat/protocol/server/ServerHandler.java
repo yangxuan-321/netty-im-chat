@@ -2,6 +2,8 @@ package com.netty.imchat.protocol.server;
 
 import com.netty.imchat.command.handler.AbstractServerCmdHandler;
 import com.netty.imchat.command.manager.ServerCmdHandlerManager;
+import com.netty.imchat.common.disruptor.MessageProducer;
+import com.netty.imchat.common.disruptor.RingBufferWorkerPoolFactory;
 import com.netty.imchat.common.entity.packet.ConnectResponsePacket;
 import com.netty.imchat.common.entity.packet.Packet;
 import com.netty.imchat.common.util.PacketCodeUtil;
@@ -57,7 +59,11 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         Packet packet = PacketCodeUtil.decode((ByteBuf) msg);
 
-        AbstractServerCmdHandler cmdHandler = ServerCmdHandlerManager.getClientCmdHandler(packet.getCommand());
-        cmdHandler.execute(ctx, msg, packet);
+        // 拿到生产者
+        String producerId = "disruptor::server-producer::dbstore";
+        MessageProducer messageProducer = RingBufferWorkerPoolFactory.getInstance().getMessageProducer(producerId);
+
+        // 投递数据
+        messageProducer.sendData(packet, ctx, msg);
     }
 }

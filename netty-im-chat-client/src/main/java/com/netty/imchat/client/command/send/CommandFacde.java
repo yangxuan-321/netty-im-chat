@@ -1,7 +1,5 @@
 package com.netty.imchat.client.command.send;
 
-import org.springframework.stereotype.Component;
-
 /**
  * @author Kevin
  * @Title: CommandFacde
